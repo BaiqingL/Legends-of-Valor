@@ -1,7 +1,7 @@
-package hw3.LegendsAndHeros.src.Monsters;
+package LegendsOfValor.Monsters;
 
-import hw3.LegendsAndHeros.src.Monsters.Monster.MonsterType;
-import hw3.LegendsAndHeros.src.World.Randomness;
+import LegendsOfValor.World.Randomness;
+import LegendsOfValor.Monsters.Monster.MonsterType;
 
 import java.util.ArrayList;
 import java.util.Arrays;

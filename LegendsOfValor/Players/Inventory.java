@@ -1,10 +1,10 @@
-package hw3.LegendsAndHeros.src.Players;
+package LegendsOfValor.Players;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
-import hw3.LegendsAndHeros.src.Items.Armor;
-import hw3.LegendsAndHeros.src.Items.Potion;
-import hw3.LegendsAndHeros.src.Items.Spell;
-import hw3.LegendsAndHeros.src.Items.Weapon;
+import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Items.Armor;
+import LegendsOfValor.Items.Potion;
+import LegendsOfValor.Items.Spell;
+import LegendsOfValor.Items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Players;
+package LegendsOfValor.Players;
 
 import java.util.ArrayList;
 import java.util.List;

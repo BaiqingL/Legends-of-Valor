@@ -1,14 +1,14 @@
-package hw3.LegendsAndHeros.src.World;
+package LegendsOfValor.World;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
-import hw3.LegendsAndHeros.src.Items.Armor;
-import hw3.LegendsAndHeros.src.Items.Potion;
-import hw3.LegendsAndHeros.src.Items.Spell;
-import hw3.LegendsAndHeros.src.Items.Weapon;
-import hw3.LegendsAndHeros.src.Monsters.Monster;
-import hw3.LegendsAndHeros.src.Monsters.MonsterBuilder;
-import hw3.LegendsAndHeros.src.Players.Hero;
-import hw3.LegendsAndHeros.src.Players.Player;
+import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Items.Armor;
+import LegendsOfValor.Items.Potion;
+import LegendsOfValor.Items.Spell;
+import LegendsOfValor.Items.Weapon;
+import LegendsOfValor.Monsters.Monster;
+import LegendsOfValor.Monsters.MonsterBuilder;
+import LegendsOfValor.Players.Hero;
+import LegendsOfValor.Players.Player;
 
 import java.util.List;
 import java.util.Locale;

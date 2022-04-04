@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.World;
+package LegendsOfValor.World;
 
 public class Tile {
     private String content;

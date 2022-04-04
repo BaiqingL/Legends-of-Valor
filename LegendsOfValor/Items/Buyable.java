@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Items;
+package LegendsOfValor.Items;
 
 abstract class Buyable {
     private final String name;

@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Items;
+package LegendsOfValor.Items;
 
 import java.util.ArrayList;
 import java.util.List;

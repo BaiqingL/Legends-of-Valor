@@ -1,9 +1,10 @@
-package hw3.LegendsAndHeros.src.World;
+package LegendsOfValor.World;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
+import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Items.*;
 import hw3.LegendsAndHeros.src.Items.*;
-import hw3.LegendsAndHeros.src.Items.Spell.SpellType;
-import hw3.LegendsAndHeros.src.Players.Player;
+import hw4.LegendsAndHeros.src.Items.*;
+import LegendsOfValor.Players.Player;
 
 import java.util.List;
 import java.util.Scanner;
@@ -85,7 +86,7 @@ public class Market {
                         case 1:
                             if (player.getMoney() >= 100) {
                                 player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Ice", 100, 1, 50, SpellType.ICE));
+                                player.getInventory().addSpell(new Spell("Ice", 100, 1, 50, Spell.SpellType.ICE));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;
@@ -94,7 +95,7 @@ public class Market {
                         case 2:
                             if (player.getMoney() >= 100) {
                                 player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Fire", 100, 1, 50, SpellType.FIRE));
+                                player.getInventory().addSpell(new Spell("Fire", 100, 1, 50, Spell.SpellType.FIRE));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;
@@ -103,7 +104,7 @@ public class Market {
                         case 3:
                             if (player.getMoney() >= 100) {
                                 player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Lightning", 100, 1, 50, SpellType.LIGHTNING));
+                                player.getInventory().addSpell(new Spell("Lightning", 100, 1, 50, Spell.SpellType.LIGHTNING));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;

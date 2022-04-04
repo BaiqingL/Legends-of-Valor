@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Players;
+package LegendsOfValor.Players;
 
 public class Paladin extends Hero {
 

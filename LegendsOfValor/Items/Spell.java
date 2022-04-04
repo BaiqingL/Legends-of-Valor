@@ -1,6 +1,6 @@
-package hw3.LegendsAndHeros.src.Items;
+package LegendsOfValor.Items;
 
-import hw3.LegendsAndHeros.src.Players.Hero;
+import LegendsOfValor.Players.Hero;
 
 import java.util.List;
 

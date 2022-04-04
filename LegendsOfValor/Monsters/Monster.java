@@ -1,7 +1,7 @@
-package hw3.LegendsAndHeros.src.Monsters;
+package LegendsOfValor.Monsters;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
-import hw3.LegendsAndHeros.src.World.Randomness;
+import LegendsOfValor.FancyPrint;
+import LegendsOfValor.World.Randomness;
 
 public class Monster extends Randomness {
     private final String name;

@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src;
+package LegendsOfValor;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {

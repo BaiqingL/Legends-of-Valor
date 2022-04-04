@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Items;
+package LegendsOfValor.Items;
 
 public class Potion extends Buyable {
     private final int increaseAmount;

@@ -1,6 +1,6 @@
-package hw3.LegendsAndHeros.src.Players;
+package LegendsOfValor.Players;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
+import LegendsOfValor.FancyPrint;
 
 import java.util.List;
 import java.util.Scanner;

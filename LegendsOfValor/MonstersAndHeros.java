@@ -1,9 +1,9 @@
-package hw3.LegendsAndHeros.src;
+package LegendsOfValor;
 
-import hw3.LegendsAndHeros.src.Players.Hero;
-import hw3.LegendsAndHeros.src.Players.HeroSelector;
-import hw3.LegendsAndHeros.src.Players.Player;
-import hw3.LegendsAndHeros.src.World.Map;
+import LegendsOfValor.Players.Hero;
+import LegendsOfValor.Players.HeroSelector;
+import LegendsOfValor.Players.Player;
+import LegendsOfValor.World.Map;
 
 import java.util.ArrayList;
 import java.util.List;

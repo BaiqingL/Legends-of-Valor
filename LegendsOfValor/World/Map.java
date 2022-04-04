@@ -1,7 +1,7 @@
-package hw3.LegendsAndHeros.src.World;
+package LegendsOfValor.World;
 
-import hw3.LegendsAndHeros.src.FancyPrint;
-import hw3.LegendsAndHeros.src.Players.Player;
+import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Players.Player;
 
 public class Map extends Randomness {
     private static final int ROWS = 8;

@@ -1,4 +1,4 @@
-package hw3.LegendsAndHeros.src.Players;
+package LegendsOfValor.Players;
 
 public abstract class Hero {
     protected String name;
