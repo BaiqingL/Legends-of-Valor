@@ -1,4 +1,4 @@
-# CS611-Monsters and Heros
+# CS611 Legends of Valor
 
 ## Baiqing Lyu
 ---------------------------------------------------------------------------
@@ -63,4 +63,4 @@ Wild.java - Wild area, determine if a combat is going to happen
 ---------------------------------------------------------------------------
 1. Navigate to the main Project Directory after downloading the files
 2. Run the following instructions on command line:
-	javac hw3/LegendsAndHeros/src/*.java && java Main
+	javac LegendsOfValor/*.java && java Main
