@@ -1,7 +1,5 @@
 package LegendsOfValor.Controllers;
 
-import LegendsOfValor.Controllers.FancyPrint;
-import LegendsOfValor.Controllers.Game;
 import LegendsOfValor.Players.Hero;
 import LegendsOfValor.Players.HeroSelector;
 import LegendsOfValor.Players.Player;
