@@ -3,7 +3,7 @@ package RPG.Controllers;
 import java.util.Scanner;
 
 public class GameLauncher {
-    private FancyPrint printer = new FancyPrint();
+    private final FancyPrint printer = new FancyPrint();
 
     public GameLauncher() {
     }
