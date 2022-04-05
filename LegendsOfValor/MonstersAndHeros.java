@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class GameLogic {
+public class MonstersAndHeros {
     private static final FancyPrint printer = new FancyPrint();
     private int heroCount;
     private Map gameMap;
     private Player player;
 
-    public GameLogic() {
+    public MonstersAndHeros() {
 
     }
 

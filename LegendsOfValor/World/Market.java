@@ -2,8 +2,6 @@ package LegendsOfValor.World;
 
 import LegendsOfValor.FancyPrint;
 import LegendsOfValor.Items.*;
-import hw3.LegendsAndHeros.src.Items.*;
-import hw4.LegendsAndHeros.src.Items.*;
 import LegendsOfValor.Players.Player;
 
 import java.util.List;
@@ -34,6 +32,7 @@ public class Market {
             printer.printGreen("3. Buy armor\n");
             printer.printCyan("4. Buy spell\n");
             printer.printYellow("5. Leave the market\n");
+            printer.printYellow("6. Quit the game\n");
             try {
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
@@ -57,6 +56,8 @@ public class Market {
                             break;
                         case 5:
                             return;
+                        case 6:
+                            System.exit(0);
                     }
                 } else {
                     printer.clearScreen();
