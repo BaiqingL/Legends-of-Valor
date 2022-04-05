@@ -3,24 +3,22 @@ package LegendsOfValor.Monsters;
 import LegendsOfValor.FancyPrint;
 import LegendsOfValor.World.Randomness;
 
-public class Monster extends Randomness {
+public abstract class Monster extends Randomness {
     private final String name;
     private final FancyPrint printer = new FancyPrint();
-    private final MonsterType type;
     private final int hp;
     private final int level;
     private int damage;
     private int defense;
     private int dodgeChance;
 
-    public Monster(String name, int level, int damage, int defense, int dodgeChance, MonsterType type) {
+    public Monster(String name, int level, int damage, int defense, int dodgeChance) {
         this.name = name;
         this.level = level;
         this.hp = 100 * this.level;
         this.damage = damage;
         this.defense = defense;
         this.dodgeChance = dodgeChance;
-        this.type = type;
     }
 
     public void decreaseDamage(int amount) {
@@ -64,10 +62,6 @@ public class Monster extends Randomness {
         return dodgeChance;
     }
 
-    public MonsterType getType() {
-        return type;
-    }
-
     public int getHp() {
         return hp;
     }
@@ -78,18 +72,21 @@ public class Monster extends Randomness {
 
     public void print() {
         printer.printYellow(this.name + " ");
-        switch (type) {
-            case DRAGON -> printer.printPurple("\uD83D\uDC09 ");
-            case EXOSKELETON -> printer.printWhite("\uD83D\uDC80 ");
-            case SPIRIT -> printer.printWhite("\uD83D\uDC7B ");
+        String monsterType = this.getClass().getSimpleName();
+        switch (monsterType) {
+            case "Dragon":
+                printer.printRed("Dragon ");
+                break;
+            case "Exoskeleton":
+                printer.printWhite("Exoskeleton ");
+                break;
+            case "Spirit":
+                printer.printGreen("Spirit ");
+                break;
         }
         printer.printWhite("Level: " + this.level + " ");
         printer.printPurple("Attack " + this.damage + " ");
         printer.printBlue("Defense " + this.defense + " \n");
-    }
-
-    enum MonsterType {
-        DRAGON, EXOSKELETON, SPIRIT
     }
 
 }

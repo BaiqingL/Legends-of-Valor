@@ -98,8 +98,6 @@ public class MonstersAndHeros {
                 }
             }
         }
-
-
     }
 
     private void printInfo() {

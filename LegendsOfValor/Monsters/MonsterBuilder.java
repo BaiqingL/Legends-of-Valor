@@ -1,7 +1,6 @@
 package LegendsOfValor.Monsters;
 
 import LegendsOfValor.World.Randomness;
-import LegendsOfValor.Monsters.Monster.MonsterType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class MonsterBuilder extends Randomness {
         // Chose a random dodge chance from 30 to 50
         int dodgeChance = getRandomNumber(30, 50);
         // Create a dragon monster from above parameters
-        return new Monster(name, level, damage, defense, dodgeChance, MonsterType.DRAGON);
+        return new Dragon(name, level, damage, defense, dodgeChance);
     }
 
     // Build an exoskeleton
@@ -59,7 +58,7 @@ public class MonsterBuilder extends Randomness {
         // Chose a random dodge chance from 30 to 50
         int dodgeChance = getRandomNumber(30, 50);
         // Create an exoskeleton monster from above parameters
-        return new Monster(name, level, damage, defense, dodgeChance, MonsterType.EXOSKELETON);
+        return new Exoskeleton(name, level, damage, defense, dodgeChance);
     }
 
     // Build a spirit
@@ -75,7 +74,7 @@ public class MonsterBuilder extends Randomness {
         // Chose a random dodge chance from 49 to 99
         int dodgeChance = getRandomNumber(49, 99);
         // Create a spirit monster from above parameters
-        return new Monster(name, level, damage, defense, dodgeChance, MonsterType.SPIRIT);
+        return new Spirit(name, level, damage, defense, dodgeChance);
     }
 
 }
