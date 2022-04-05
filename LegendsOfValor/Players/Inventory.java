@@ -1,6 +1,6 @@
 package LegendsOfValor.Players;
 
-import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Controllers.FancyPrint;
 import LegendsOfValor.Items.Armor;
 import LegendsOfValor.Items.Potion;
 import LegendsOfValor.Items.Spell;

@@ -1,6 +1,6 @@
 package LegendsOfValor.Players;
 
-import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Controllers.FancyPrint;
 
 import java.util.List;
 import java.util.Scanner;
