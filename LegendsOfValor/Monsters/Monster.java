@@ -1,6 +1,6 @@
 package LegendsOfValor.Monsters;
 
-import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Controllers.FancyPrint;
 import LegendsOfValor.World.Randomness;
 
 public class Monster extends Randomness {

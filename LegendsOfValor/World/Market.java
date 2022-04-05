@@ -1,6 +1,6 @@
 package LegendsOfValor.World;
 
-import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Controllers.FancyPrint;
 import LegendsOfValor.Items.*;
 import LegendsOfValor.Players.Player;
 
