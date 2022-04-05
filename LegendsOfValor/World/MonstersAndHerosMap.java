@@ -3,7 +3,7 @@ package LegendsOfValor.World;
 import LegendsOfValor.FancyPrint;
 import LegendsOfValor.Players.Player;
 
-public class Map extends Randomness {
+public class MonstersAndHerosMap extends Randomness {
     private static final int ROWS = 8;
     private static final int COLUMNS = 8;
     private static final FancyPrint printer = new FancyPrint();
@@ -16,7 +16,7 @@ public class Map extends Randomness {
     // Keep track where the hero was on
     private Tile heroStep;
 
-    public Map(Player player) {
+    public MonstersAndHerosMap(Player player) {
         populateMap();
         this.player = player;
         market = new Market(player);

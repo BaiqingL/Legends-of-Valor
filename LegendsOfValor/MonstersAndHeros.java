@@ -3,7 +3,7 @@ package LegendsOfValor;
 import LegendsOfValor.Players.Hero;
 import LegendsOfValor.Players.HeroSelector;
 import LegendsOfValor.Players.Player;
-import LegendsOfValor.World.Map;
+import LegendsOfValor.World.MonstersAndHerosMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class MonstersAndHeros {
     private static final FancyPrint printer = new FancyPrint();
     private int heroCount;
-    private Map gameMap;
+    private MonstersAndHerosMap gameMap;
     private Player player;
 
     public MonstersAndHeros() {
@@ -49,7 +49,7 @@ public class MonstersAndHeros {
 
         printer.clearScreen();
         // Construct map object
-        gameMap = new Map(player);
+        gameMap = new MonstersAndHerosMap(player);
         boolean improperMove = false;
         boolean printInfo = false;
 
