@@ -101,8 +101,6 @@ public class MonstersAndHeros implements Game {
                 }
             }
         }
-
-
     }
 
     private void printInfo() {
