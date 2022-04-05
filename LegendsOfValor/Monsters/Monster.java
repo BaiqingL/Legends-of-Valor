@@ -61,7 +61,7 @@ public abstract class Monster extends Randomness {
     public int getDodgeChance() {
         return dodgeChance;
     }
-    
+
     public int getHp() {
         return hp;
     }
@@ -72,6 +72,18 @@ public abstract class Monster extends Randomness {
 
     public void print() {
         printer.printYellow(this.name + " ");
+        String monsterType = this.getClass().getSimpleName();
+        switch (monsterType) {
+            case "Dragon":
+                printer.printRed("Dragon ");
+                break;
+            case "Exoskeleton":
+                printer.printWhite("Exoskeleton ");
+                break;
+            case "Spirit":
+                printer.printGreen("Spirit ");
+                break;
+        }
         printer.printWhite("Level: " + this.level + " ");
         printer.printPurple("Attack " + this.damage + " ");
         printer.printBlue("Defense " + this.defense + " \n");
