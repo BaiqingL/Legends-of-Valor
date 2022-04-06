@@ -1,5 +1,7 @@
-package LegendsOfValor;
+package LegendsOfValor.Controllers;
 
+import LegendsOfValor.Controllers.FancyPrint;
+import LegendsOfValor.Controllers.Game;
 import LegendsOfValor.Players.Hero;
 import LegendsOfValor.Players.HeroSelector;
 import LegendsOfValor.Players.Party;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class MonstersAndHeros {
+public class MonstersAndHeros implements Game {
     private static final FancyPrint printer = new FancyPrint();
     private int heroCount;
     private MonstersAndHerosMap gameMap;
@@ -20,6 +22,7 @@ public class MonstersAndHeros {
 
     }
 
+    @Override
     public void startGame() {
         printer.clearScreen();
         while (true) {
@@ -98,8 +101,6 @@ public class MonstersAndHeros {
                 }
             }
         }
-
-
     }
 
     private void printInfo() {

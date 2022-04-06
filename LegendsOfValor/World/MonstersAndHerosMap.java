@@ -1,7 +1,7 @@
 package LegendsOfValor.World;
 
-import LegendsOfValor.FancyPrint;
-import LegendsOfValor.Players.Party;
+import LegendsOfValor.Controllers.FancyPrint;
+import LegendsOfValor.Players.Player;
 
 public class MonstersAndHerosMap extends Randomness {
     private static final int ROWS = 8;
@@ -10,16 +10,16 @@ public class MonstersAndHerosMap extends Randomness {
     private final Tile[][] boardContent = new Tile[ROWS][COLUMNS];
     private final int[] heroLocation = new int[2];
     // Player reference
-    private final Party party;
+    private final Player player;
     // The market object
     private final Market market;
     // Keep track where the hero was on
     private Tile heroStep;
 
-    public MonstersAndHerosMap(Party party) {
+    public MonstersAndHerosMap(Player player) {
         populateMap();
-        this.party = party;
-        market = new Market(party);
+        this.player = player;
+        market = new Market(player);
     }
 
     // 20% Non-playable cells 30% markets and 50% wild area
@@ -182,7 +182,7 @@ public class MonstersAndHerosMap extends Randomness {
     public void checkWild() {
         if (heroStep.getContent().equals("W")) {
             if (Wild.fightOccurs()) {
-                Combat combatScene = new Combat(party);
+                Combat combatScene = new Combat(player);
                 combatScene.initiateCombat();
             }
         }

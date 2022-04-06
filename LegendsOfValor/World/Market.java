@@ -1,6 +1,6 @@
 package LegendsOfValor.World;
 
-import LegendsOfValor.FancyPrint;
+import LegendsOfValor.Controllers.FancyPrint;
 import LegendsOfValor.Items.*;
 import LegendsOfValor.Players.Party;
 
@@ -36,7 +36,7 @@ public class Market {
             try {
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
-                if (choice > 0 && choice <= 4) {
+                if (choice > 0 && choice <= 6) {
                     switch (choice) {
                         case 1:
                             listPotions();

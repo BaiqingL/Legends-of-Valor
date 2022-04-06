@@ -1,4 +1,4 @@
-package LegendsOfValor;
+package LegendsOfValor.Controllers;
 
 public class FancyPrint {
     private static final String ANSI_RESET = "\u001B[0m";
