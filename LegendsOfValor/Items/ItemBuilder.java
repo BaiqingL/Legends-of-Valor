@@ -3,8 +3,8 @@ package LegendsOfValor.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyableBuilder {
-    public BuyableBuilder() {
+public class ItemBuilder {
+    public ItemBuilder() {
     }
 
     public List<Weapon> buildWeapons() {

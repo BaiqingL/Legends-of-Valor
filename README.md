@@ -22,7 +22,7 @@ FancyPrint.java - Manages colored printing information
 
 Hero.java - Manages Hero information
 
-HeroSelector.java - Prompts the player to make a hero selection at the beginning of the game
+HeroSelector.java - Prompts the party to make a hero selection at the beginning of the game
 
 Inventory.java - Manges the inventory
 
@@ -30,7 +30,7 @@ Main.java - Main entry point for the game
 
 Map.java - Manges the map data and how to render the Map
 
-Market.java - Provides player access to the market
+Market.java - Provides party access to the market
 
 Monster.java - Provides the monster information for the game
 
@@ -40,7 +40,7 @@ MonstersAndHeros.java - Main game logic, chaning everything together
 
 Paladin.java - Palandin class for the Heros
 
-Player.java - Main player class containing how many heros and their stats
+Player.java - Main party class containing how many heros and their stats
 
 Potion.java - Potions to be bought in the market and used in Combat
 

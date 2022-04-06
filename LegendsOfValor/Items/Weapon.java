@@ -1,6 +1,6 @@
 package LegendsOfValor.Items;
 
-public class Weapon extends Buyable {
+public class Weapon extends Item {
 
     private final int damage;
     private final int handsRequired;

@@ -4,7 +4,7 @@ import LegendsOfValor.Players.Hero;
 
 import java.util.List;
 
-public class Spell extends Buyable {
+public class Spell extends Item {
 
     private final int manaRequired;
     private final SpellType spellType;
@@ -23,11 +23,9 @@ public class Spell extends Buyable {
         return manaRequired;
     }
 
-    public int getDamage(List<Hero> heros) {
+    public int getDamage(Hero hero) {
         int damage = 0;
-        for (Hero hero : heros) {
-            damage += hero.getDexterity() * 2;
-        }
+        damage += hero.getDexterity() * 2;
         return damage;
     }
 

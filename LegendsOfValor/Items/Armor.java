@@ -1,6 +1,6 @@
 package LegendsOfValor.Items;
 
-public class Armor extends Buyable {
+public class Armor extends Item {
 
     private final int damageReduction;
 

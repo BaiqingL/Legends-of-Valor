@@ -2,21 +2,21 @@ package LegendsOfValor.World;
 
 import LegendsOfValor.FancyPrint;
 import LegendsOfValor.Items.*;
-import LegendsOfValor.Players.Player;
+import LegendsOfValor.Players.Party;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class Market {
-    private static final BuyableBuilder buyableBuilder = new BuyableBuilder();
+    private static final ItemBuilder ITEM_BUILDER = new ItemBuilder();
     private static final FancyPrint printer = new FancyPrint();
-    private static final List<Potion> potions = buyableBuilder.buildPotions();
-    private static final List<Weapon> weapons = buyableBuilder.buildWeapons();
-    private static final List<Armor> armors = buyableBuilder.buildArmor();
-    private final Player player;
+    private static final List<Potion> potions = ITEM_BUILDER.buildPotions();
+    private static final List<Weapon> weapons = ITEM_BUILDER.buildWeapons();
+    private static final List<Armor> armors = ITEM_BUILDER.buildArmor();
+    private final Party party;
 
-    public Market(Player player) {
-        this.player = player;
+    public Market(Party party) {
+        this.party = party;
 
     }
 
@@ -26,7 +26,7 @@ public class Market {
         boolean selected = false;
         while (!selected) {
             printer.printYellow("\nWelcome to the Market! You can only select one type of item to buy per visit\n");
-            printer.printGreen("You have " + player.getMoney() + " gold.\n");
+            printer.printGreen("You have " + party.getMoney() + " gold.\n");
             printer.printBlue("1. Buy potions\n");
             printer.printRed("2. Buy weapons\n");
             printer.printGreen("3. Buy armor\n");
@@ -85,27 +85,27 @@ public class Market {
                 if (choice > 0 && choice <= 3) {
                     switch (choice) {
                         case 1:
-                            if (player.getMoney() >= 100) {
-                                player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Ice", 100, 1, 50, Spell.SpellType.ICE));
+                            if (party.getMoney() >= 100) {
+                                party.spendMoney(100);
+                                party.getInventory().addSpell(new Spell("Ice", 100, 1, 50, Spell.SpellType.ICE));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;
                             }
                             break;
                         case 2:
-                            if (player.getMoney() >= 100) {
-                                player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Fire", 100, 1, 50, Spell.SpellType.FIRE));
+                            if (party.getMoney() >= 100) {
+                                party.spendMoney(100);
+                                party.getInventory().addSpell(new Spell("Fire", 100, 1, 50, Spell.SpellType.FIRE));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;
                             }
                             break;
                         case 3:
-                            if (player.getMoney() >= 100) {
-                                player.spendMoney(100);
-                                player.getInventory().addSpell(new Spell("Lightning", 100, 1, 50, Spell.SpellType.LIGHTNING));
+                            if (party.getMoney() >= 100) {
+                                party.spendMoney(100);
+                                party.getInventory().addSpell(new Spell("Lightning", 100, 1, 50, Spell.SpellType.LIGHTNING));
                             } else {
                                 printer.printRed("You don't have enough money!\n");
                                 return;
@@ -135,11 +135,11 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= potions.size()) {
                     Potion potion = potions.get(choice - 1);
-                    if (potion.getPrice() <= player.getMoney() && potion.getMinLevel() <= player.getLevel()) {
-                        player.spendMoney(potion.getPrice());
+                    if (potion.getPrice() <= party.getMoney() && potion.getMinLevel() <= party.getLevel()) {
+                        party.spendMoney(potion.getPrice());
                         // Add potion to inventory;
                         printer.printGreen("You bought " + potion.getName() + " for " + potion.getPrice() + " gold.\n");
-                        player.getInventory().addPotion(potion);
+                        party.getInventory().addPotion(potion);
                         printer.printYellow("Do you want to keep buying? (y/n): ");
                         String input = scanner.next().toLowerCase();
                         if (input.equals("n")) {
@@ -178,10 +178,10 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= weapons.size()) {
                     Weapon weapon = weapons.get(choice - 1);
-                    if (weapon.getPrice() <= player.getMoney() && weapon.getMinLevel() <= player.getLevel()) {
-                        player.spendMoney(weapon.getPrice());
+                    if (weapon.getPrice() <= party.getMoney() && weapon.getMinLevel() <= party.getLevel()) {
+                        party.spendMoney(weapon.getPrice());
                         // Add weapon to inventory;
-                        player.getInventory().addWeapon(weapon);
+                        party.getInventory().addWeapon(weapon);
                         printer.printGreen("You bought " + weapon.getName() + " for " + weapon.getPrice() + " gold.\n");
                         printer.printYellow("Do you want to keep buying? (y/n): ");
                         String input = scanner.next().toLowerCase();
@@ -221,10 +221,10 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= armors.size()) {
                     Armor armor = armors.get(choice - 1);
-                    if (armor.getPrice() <= player.getMoney() && armor.getMinLevel() <= player.getLevel()) {
-                        player.spendMoney(armor.getPrice());
+                    if (armor.getPrice() <= party.getMoney() && armor.getMinLevel() <= party.getLevel()) {
+                        party.spendMoney(armor.getPrice());
                         // Add armor to inventory;
-                        player.getInventory().addArmor(armor);
+                        party.getInventory().addArmor(armor);
                         printer.printGreen("You bought " + armor.getName() + " for " + armor.getPrice() + " gold.\n");
                         printer.printYellow("Do you want to keep buying? (y/n): ");
                         String input = scanner.next().toLowerCase();

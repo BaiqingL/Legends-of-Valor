@@ -1,25 +1,10 @@
 package LegendsOfValor.Items;
 
-abstract class Buyable {
-    private final String name;
-    private final int price;
-    private final int minLevel;
+import LegendsOfValor.Players.Hero;
 
-    public Buyable(String name, int price, int minLevel) {
-        this.name = name;
-        this.price = price;
-        this.minLevel = minLevel;
-    }
+public interface Buyable {
 
-    public String getName() {
-        return this.name;
-    }
+    public int getPrice();
+    public void buy(Hero h);
 
-    public int getPrice() {
-        return this.price;
-    }
-
-    public int getMinLevel() {
-        return this.minLevel;
-    }
 }

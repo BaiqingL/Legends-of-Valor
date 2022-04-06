@@ -1,6 +1,6 @@
 package LegendsOfValor.Items;
 
-public class Potion extends Buyable {
+public class Potion extends Item {
     private final int increaseAmount;
     private final String statToIncrease;
 

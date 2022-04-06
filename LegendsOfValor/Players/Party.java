@@ -2,15 +2,14 @@ package LegendsOfValor.Players;
 
 import java.util.List;
 
-public class Player {
+public class Party {
     private final List<Hero> heros;
-    private final Inventory inventory = new Inventory();
     private int money;
     private final int level = 1;
     private int exp = 0;
     private int mana;
 
-    public Player(List<Hero> heros) {
+    public Party(List<Hero> heros) {
         this.heros = heros;
         for (Hero hero : heros) {
             money += hero.getMoney();
@@ -64,7 +63,4 @@ public class Player {
         this.money += money;
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
 }

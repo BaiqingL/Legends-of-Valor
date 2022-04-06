@@ -2,7 +2,7 @@ package LegendsOfValor;
 
 import LegendsOfValor.Players.Hero;
 import LegendsOfValor.Players.HeroSelector;
-import LegendsOfValor.Players.Player;
+import LegendsOfValor.Players.Party;
 import LegendsOfValor.World.MonstersAndHerosMap;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class MonstersAndHeros {
     private static final FancyPrint printer = new FancyPrint();
     private int heroCount;
     private MonstersAndHerosMap gameMap;
-    private Player player;
+    private Party party;
 
     public MonstersAndHeros() {
 
@@ -45,11 +45,11 @@ public class MonstersAndHeros {
         }
 
         // Make the player
-        player = new Player(heros);
+        party = new Party(heros);
 
         printer.clearScreen();
         // Construct map object
-        gameMap = new MonstersAndHerosMap(player);
+        gameMap = new MonstersAndHerosMap(party);
         boolean improperMove = false;
         boolean printInfo = false;
 
@@ -104,11 +104,11 @@ public class MonstersAndHeros {
 
     private void printInfo() {
         printer.clearScreen();
-        for (Hero hero : player.getHeros()) {
+        for (Hero hero : party.getHeros()) {
             printer.printYellow(hero.toString() + "\n");
+            printer.printGreen("Money: " + party.getMoney() + "\n");
+            hero.getInventory().printInventory();
         }
-        printer.printGreen("Money: " + player.getMoney() + "\n");
-        player.getInventory().printInventory();
         Scanner scanner = new Scanner(System.in);
         printer.printYellow("Press enter to return...");
         scanner.nextLine();
