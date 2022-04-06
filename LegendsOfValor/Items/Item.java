@@ -2,7 +2,7 @@ package LegendsOfValor.Items;
 
 import LegendsOfValor.Players.Hero;
 
-abstract class Item implements Buyable {
+public abstract class Item implements Buyable, Sellable {
     private final String name;
     private final int price;
     private final int minLevel;
@@ -26,9 +26,23 @@ abstract class Item implements Buyable {
     }
 
     @Override
-    public void buy(Hero h) {
-        if(h.getMoney() >= this.price){
-
+    public boolean buy(Hero hero) {
+        if(hero.getMoney() >= this.price && hero.getLevel() >= this.minLevel){
+            hero.getInventory().addItem(this);
+            hero.setMoney( hero.getMoney() - this.price );
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean sell(Hero hero) {
+        if(hero.getInventory().contains(this)){
+            hero.getInventory().removeItem(this);
+            hero.setMoney( hero.getMoney() + this.price);
+            return true;
+        }
+
+        return false;
     }
 }

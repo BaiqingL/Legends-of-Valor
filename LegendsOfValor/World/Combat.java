@@ -109,7 +109,7 @@ public class Combat extends Randomness {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= spells.size() && spells.get(choice - 1).getManaCost() <= party.getMana()) {
                     Spell spell = spells.get(choice - 1);
-                    hero.getInventory().removeSpell(choice - 1);
+                    hero.getInventory().removeSpell(spells.get(choice - 1));
                     switch (spell.getSpellType()) {
                         case ICE:
                             target.decreaseDamage(spell.getDamage(hero));

@@ -2,9 +2,7 @@ package LegendsOfValor.Items;
 
 import LegendsOfValor.Players.Hero;
 
-public interface Buyable {
-
+public interface Sellable {
     public int getPrice();
-    public boolean buy(Hero hero);
-
+    public boolean sell(Hero hero);
 }

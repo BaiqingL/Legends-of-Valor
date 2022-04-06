@@ -82,7 +82,7 @@ public abstract class Hero {
         this.hp = hp;
     }
 
-    int getLevel() {
+    public int getLevel() {
         return level;
     }
 
