@@ -1,7 +1,8 @@
 package LegendsOfValor.World;
 
 import LegendsOfValor.Controllers.FancyPrint;
-import LegendsOfValor.Players.Player;
+import LegendsOfValor.Players.Party;
+import LegendsOfValor.Players.Party;
 
 public class MonstersAndHerosMap extends Randomness {
     private static final int ROWS = 8;
@@ -9,17 +10,17 @@ public class MonstersAndHerosMap extends Randomness {
     private static final FancyPrint printer = new FancyPrint();
     private final Tile[][] boardContent = new Tile[ROWS][COLUMNS];
     private final int[] heroLocation = new int[2];
-    // Player reference
-    private final Player player;
+    // party reference
+    private final Party party;
     // The market object
     private final Market market;
     // Keep track where the hero was on
     private Tile heroStep;
 
-    public MonstersAndHerosMap(Player player) {
+    public MonstersAndHerosMap(Party party) {
         populateMap();
-        this.player = player;
-        market = new Market(player);
+        this.party = party;
+        market = new Market(party);
     }
 
     // 20% Non-playable cells 30% markets and 50% wild area
@@ -97,7 +98,7 @@ public class MonstersAndHerosMap extends Randomness {
         if (checkBoundaries(heroLocation[0] - 1, heroLocation[1])) {
             return false;
         }
-        // Store the new tile the player steps on
+        // Store the new tile the party steps on
         Tile newHeroStep = boardContent[heroLocation[0] - 1][heroLocation[1]];
         // Set back the original tile
         boardContent[heroLocation[0]][heroLocation[1]] = heroStep;
@@ -115,7 +116,7 @@ public class MonstersAndHerosMap extends Randomness {
         if (checkBoundaries(heroLocation[0] + 1, heroLocation[1])) {
             return false;
         }
-        // Store the new tile the player steps on
+        // Store the new tile the party steps on
         Tile newHeroStep = boardContent[heroLocation[0] + 1][heroLocation[1]];
         // Set back the original tile
         boardContent[heroLocation[0]][heroLocation[1]] = heroStep;
@@ -133,7 +134,7 @@ public class MonstersAndHerosMap extends Randomness {
         if (checkBoundaries(heroLocation[0], heroLocation[1] + 1)) {
             return false;
         }
-        // Store the new tile the player steps on
+        // Store the new tile the party steps on
         Tile newHeroStep = boardContent[heroLocation[0]][heroLocation[1] + 1];
         // Set back the original tile
         boardContent[heroLocation[0]][heroLocation[1]] = heroStep;
@@ -151,7 +152,7 @@ public class MonstersAndHerosMap extends Randomness {
         if (checkBoundaries(heroLocation[0], heroLocation[1] - 1)) {
             return false;
         }
-        // Store the new tile the player steps on
+        // Store the new tile the party steps on
         Tile newHeroStep = boardContent[heroLocation[0]][heroLocation[1] - 1];
         // Set back the original tile
         boardContent[heroLocation[0]][heroLocation[1]] = heroStep;
@@ -182,7 +183,7 @@ public class MonstersAndHerosMap extends Randomness {
     public void checkWild() {
         if (heroStep.getContent().equals("W")) {
             if (Wild.fightOccurs()) {
-                Combat combatScene = new Combat(player);
+                Combat combatScene = new Combat(party);
                 combatScene.initiateCombat();
             }
         }

@@ -6,7 +6,7 @@ import LegendsOfValor.World.Randomness;
 public abstract class Monster extends Randomness {
     private final String name;
     private final FancyPrint printer = new FancyPrint();
-    private final int hp;
+    private int hp;
     private final int level;
     private int damage;
     private int defense;
@@ -64,6 +64,10 @@ public abstract class Monster extends Randomness {
 
     public int getHp() {
         return hp;
+    }
+
+    public void decreaseHp(int amount){
+        this.hp -= amount;
     }
 
     public boolean hitLands() {

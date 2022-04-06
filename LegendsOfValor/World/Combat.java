@@ -42,14 +42,17 @@ public class Combat extends Randomness {
             }
             Scanner scanner = new Scanner(System.in);
             for (int partyIdx = 0; partyIdx < heros.size(); partyIdx++) {
-                printer.printYellow(heros.get(partyIdx).getName() + "'s Turn");
+                printer.printYellow(heros.get(partyIdx).getName() + "'s Turn\n");
                 printer.printYellow("(r) Run away (a) Attack (s) Spells (i) Info (p) Potions\nInput: ");
                 String choice = scanner.nextLine();
                 switch (choice.toLowerCase(Locale.ROOT)) {
                     case "r":
                         return;
                     case "a":
-                        if (monsters.get(partyIdx).getHp() <= 0 || attack(heros.get(partyIdx), monsters.get(partyIdx) )) {
+                        if (monsters.get(partyIdx).getHp() <= 0) {
+                            break;
+                        }
+                        if ( attack(heros.get(partyIdx), monsters.get(partyIdx) )) {
                             return;
                         }
                         break;
@@ -60,7 +63,7 @@ public class Combat extends Randomness {
                         combatInfo();
                         break;
                     case "p":
-                        usePotion();
+                        usePotion(heros.get(partyIdx));
                         break;
                     default:
                         invalidMove = true;
@@ -176,23 +179,22 @@ public class Combat extends Randomness {
     private boolean attack(Hero hero, Monster target) {
         // (strength + weapon damage)*0.05
         int strengthTotal = 0;
-        for (Hero hero : party.getHeros()) {
-            strengthTotal += hero.getStrength();
+        strengthTotal += hero.getStrength();
+        if(hero.getInventory().getWeapons().size()>0) {
+            strengthTotal += hero.getInventory().getWeapons().get(0).getDamage();
         }
-        for (Weapon weapon : hero.getInventory().getWeapons()) {
-            strengthTotal += weapon.getDamage();
-        }
-        double damagePurposed = (double) strengthTotal * 0.05;
+        int damagePurposed = (int)(strengthTotal * 0.05);
 
         if (hitMonsterLands()) {
-            if (enemyTakeDamage(damagePurposed)) {
-                win();
+            if (enemyTakeDamage(target, damagePurposed)) {
+                printer.printGreen(target.getName() + " was killed!");
                 printer.printYellow("Press Enter to continue...");
                 Scanner scanner = new Scanner(System.in);
                 scanner.nextLine();
+
                 return true;
             }
-            logEnemyDamage(damagePurposed);
+            logEnemyDamage(target, damagePurposed);
         } else {
             printer.printRed("Your attacked missed!\n");
         }
@@ -203,15 +205,18 @@ public class Combat extends Randomness {
         }
         enemyDamage *= 0.05;
         if (hitHeroLands()) {
-            int damagePastDefense = calculateArmorDefense((int) enemyDamage);
-            if (heroTakeDamage((damagePastDefense))) {
-                lose();
+            int armorDamageReduction = 0;
+            if (hero.getInventory().getArmors().size() > 0) {
+                armorDamageReduction = hero.getInventory().getArmors().get(0).getDamageReduction();
+            }
+            int damageDone = (int) enemyDamage - armorDamageReduction;
+            if (heroTakeDamage(hero, damageDone)) {
                 printer.printYellow("Press Enter to continue...");
                 Scanner scanner = new Scanner(System.in);
                 scanner.nextLine();
                 return true;
             }
-            logHeroDamage(damagePastDefense);
+            logHeroDamage(hero, damageDone);
         } else {
             printer.printGreen("You dodged an attack!\n");
         }
@@ -230,13 +235,13 @@ public class Combat extends Randomness {
         return true;
     }
 
-    private int calculateArmorDefense(int incomingDamage) {
-        int armorDefense = 0;
-        for (Armor armor : party.getInventory().getArmors()) {
-            armorDefense += armor.getDamageReduction();
-        }
-        return incomingDamage - armorDefense;
-    }
+//    private int calculateArmorDefense(int incomingDamage) {
+//        int armorDefense = 0;
+//        for (Armor armor : party.getInventory().getArmors()) {
+//            armorDefense += armor.getDamageReduction();
+//        }
+//        return incomingDamage - armorDefense;
+//    }
 
     private boolean hitHeroLands() {
         // Hero dodge_chance *.002
@@ -252,26 +257,44 @@ public class Combat extends Randomness {
 
     // Returns true if enemy dies
     // False if game continues
-    private boolean enemyTakeDamage(double damage) {
-        this.monsterHealth -= (int) damage;
-        return this.monsterHealth <= 0;
+    private boolean enemyTakeDamage(Monster monster, int damage) {
+        monster.decreaseHp( damage );
+        return monster.getHp() <= 0;
     }
 
-    private boolean heroTakeDamage(double damage) {
-        this.playerHealth -= (int) damage;
-        return this.playerHealth < 0;
+    private boolean heroTakeDamage(Hero hero, int damage) {
+        hero.setHp( hero.getHp() -  damage );
+        return hero.getHp() <= 0;
     }
 
-    private void logEnemyDamage(double damage) {
+    private void logEnemyDamage(Monster monster, int damage) {
         printer.clearScreen();
-        printer.printRed("Enemy took " + (int) damage + " damage!\n");
-        printer.printYellow("They now have " + this.monsterHealth + " combined health.\n");
+        printer.printRed(monster.getName() + " took " + damage + " damage!\n");
+        printer.printYellow("They now have " + monster.getHp() + " health.\n");
     }
 
-    private void logHeroDamage(double damage) {
+    private void logHeroDamage(Hero hero , double damage) {
         printer.clearScreen();
-        printer.printRed("You took " + (int) damage + " damage!\n");
-        printer.printYellow("You now have " + this.playerHealth + " combined health.\n");
+        printer.printRed(hero.getName() + " took " + (int) damage + " damage!\n");
+        printer.printYellow("They now have " + hero.getHp() + " health.\n");
+    }
+
+    private boolean allHerosDead() {
+        for (Hero hero : this.heros) {
+            if (hero.getHp() > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean allMonstersDead() {
+        for (Monster monster : this.monsters) {
+            if (monster.getHp() > 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void win() {
