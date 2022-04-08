@@ -28,9 +28,9 @@ public class Market {
 
         boolean selected = false;
         while (!selected){
-            printer.printYellow("Choose a hero to buy for");
+            printer.printYellow("Choose a hero to buy for\n");
             for (int i = 0; i< this.party.getHeros().size(); i++) {
-                printer.printYellow("\n"+(i+1) +". "+ this.party.getHeros().get(i).getName());
+                printer.printYellow((i+1) +". "+ this.party.getHeros().get(i).getName()+"\n");
             }
 
             try {
@@ -75,7 +75,7 @@ public class Market {
 
             printer.printYellow("\nWelcome to the Market! You can only select one type of item to buy per visit\n");
 
-            printer.printGreen("You have " + party.getMoney() + " gold.\n");
+            printer.printGreen("You have " + hero.getMoney() + " gold.\n");
             printer.printBlue("1. Buy potions\n");
             printer.printRed("2. Buy weapons\n");
             printer.printGreen("3. Buy armor\n");
