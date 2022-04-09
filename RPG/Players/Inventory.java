@@ -125,5 +125,9 @@ public class Inventory {
         for (Armor armor : armors) {
             printer.printGreen(armor.getName() + "\n");
         }
+        printer.printCyan("Spells: \n");
+        for (Spell spell : spells) {
+            printer.printGreen(spell.getName() + "\n");
+        }
     }
 }

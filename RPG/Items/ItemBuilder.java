@@ -38,4 +38,12 @@ public class ItemBuilder {
         armors.add(new Armor("Guardian Angle", 1000, 10, 1000));
         return armors;
     }
+
+    public List<Spell> buildSpell() {
+        List<Spell> spells = new ArrayList<>();
+        spells.add(new Spell("Ice", 100, 1, 50, Spell.SpellType.ICE));
+        spells.add(new Spell("Fire", 100, 1, 50, Spell.SpellType.FIRE));
+        spells.add(new Spell("Lightning", 100, 1, 50, Spell.SpellType.LIGHTNING));
+        return spells;
+    }
 }

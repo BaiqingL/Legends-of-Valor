@@ -15,6 +15,7 @@ public class Market {
     private static final List<Potion> potions = ITEM_BUILDER.buildPotions();
     private static final List<Weapon> weapons = ITEM_BUILDER.buildWeapons();
     private static final List<Armor> armors = ITEM_BUILDER.buildArmor();
+    private static final List<Spell> spells = ITEM_BUILDER.buildSpell();
     private final Party party;
     private Hero hero;
 
@@ -131,37 +132,14 @@ public class Market {
                 printer.printYellow("Enter the number of the spell you want to buy: ");
                 Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
-                if (choice > 0 && choice <= 3) {
-                    switch (choice) {
-                        case 1:
-                            if (party.getMoney() >= 100) {
-                                party.spendMoney(100);
-                                hero.getInventory().addSpell(new Spell("Ice", 100, 1, 50, Spell.SpellType.ICE));
-                            } else {
-                                printer.printRed("You don't have enough money!\n");
-                                return;
-                            }
-                            break;
-                        case 2:
-                            if (party.getMoney() >= 100) {
-                                party.spendMoney(100);
-                                hero.getInventory().addSpell(new Spell("Fire", 100, 1, 50, Spell.SpellType.FIRE));
-                            } else {
-                                printer.printRed("You don't have enough money!\n");
-                                return;
-                            }
-                            break;
-                        case 3:
-                            if (party.getMoney() >= 100) {
-                                party.spendMoney(100);
-                                hero.getInventory().addSpell(new Spell("Lightning", 100, 1, 50, Spell.SpellType.LIGHTNING));
-                            } else {
-                                printer.printRed("You don't have enough money!\n");
-                                return;
-                            }
-                            break;
+                if (choice > 0 && choice <= spells.size()) {
+                    Spell spell = spells.get(choice - 1);
+                    if (spell.buy(hero)) {
+                        break;
+                    } else {
+                        printer.printRed("You can't buy this item.\n");
+                        return;
                     }
-                    return;
                 }
             } catch (Exception ignored) {
                 printer.printRed("Invalid choice\n");
@@ -184,24 +162,7 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= potions.size()) {
                     Potion potion = potions.get(choice - 1);
-                    if (potion.getPrice() <= party.getMoney() && potion.getMinLevel() <= party.getLevel()) {
-                        party.spendMoney(potion.getPrice());
-                        // Add potion to inventory;
-                        printer.printGreen("You bought " + potion.getName() + " for " + potion.getPrice() + " gold.\n");
-                        hero.getInventory().addPotion(potion);
-                        printer.printYellow("Do you want to keep buying? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("n")) {
-                            return;
-                        }
-                    } else {
-                        printer.printRed("You can't buy this item.\n");
-                        printer.printYellow("Would you like to quit? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("y")) {
-                            return;
-                        }
-                    }
+                    if (purchase(potion.buy(hero), potion)) return;
                 } else {
                     printer.printRed("Invalid choice.\n");
                 }
@@ -227,24 +188,7 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= weapons.size()) {
                     Weapon weapon = weapons.get(choice - 1);
-                    if (weapon.getPrice() <= party.getMoney() && weapon.getMinLevel() <= party.getLevel()) {
-                        party.spendMoney(weapon.getPrice());
-                        // Add weapon to inventory;
-                        hero.getInventory().addWeapon(weapon);
-                        printer.printGreen("You bought " + weapon.getName() + " for " + weapon.getPrice() + " gold.\n");
-                        printer.printYellow("Do you want to keep buying? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("n")) {
-                            return;
-                        }
-                    } else {
-                        printer.printRed("You can't buy this item.\n");
-                        printer.printYellow("Would you like to quit? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("y")) {
-                            return;
-                        }
-                    }
+                    if (purchase(weapon.buy(hero), weapon)) return;
                 } else {
                     printer.printRed("Invalid choice.\n");
                 }
@@ -270,24 +214,7 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= armors.size()) {
                     Armor armor = armors.get(choice - 1);
-                    if (armor.getPrice() <= party.getMoney() && armor.getMinLevel() <= party.getLevel()) {
-                        party.spendMoney(armor.getPrice());
-                        // Add armor to inventory;
-                        hero.getInventory().addArmor(armor);
-                        printer.printGreen("You bought " + armor.getName() + " for " + armor.getPrice() + " gold.\n");
-                        printer.printYellow("Do you want to keep buying? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("n")) {
-                            return;
-                        }
-                    } else {
-                        printer.printRed("You can't buy this item.\n");
-                        printer.printYellow("Would you like to quit? (y/n): ");
-                        String input = scanner.next().toLowerCase();
-                        if (input.equals("y")) {
-                            return;
-                        }
-                    }
+                    if (purchase(armor.buy(hero), armor)) return;
                 } else {
                     printer.printRed("Invalid choice.\n");
                 }
@@ -296,6 +223,26 @@ public class Market {
             }
         }
 
+    }
+
+    private boolean purchase( boolean buy, Item item) {
+        Scanner scanner = new Scanner(System.in);
+        if (buy) {
+            printer.printGreen("You bought " + item.getName() + " for " + item.getPrice() + " gold.\n");
+            printer.printYellow("Do you want to keep buying? (y/n): ");
+            String input = scanner.next().toLowerCase();
+            if (input.equals("n")) {
+                return true;
+            }
+        } else {
+            printer.printRed("You can't buy this item.\n");
+            printer.printYellow("Would you like to quit? (y/n): ");
+            String input = scanner.next().toLowerCase();
+            if (input.equals("y")) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
