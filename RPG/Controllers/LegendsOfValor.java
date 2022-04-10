@@ -32,8 +32,10 @@ public class LegendsOfValor implements Game {
     @Override
     public void startGame() {
         printer.clearScreen();
+        // Start game loop
         while (true) {
             List<Hero> heros = new ArrayList<>();
+            // We know that there will always be 3 heros in the game, so default select three heros
             for (int i = 0; i < 3; i++) {
                 HeroSelector selector = new HeroSelector();
                 selector.promptHero();
@@ -41,6 +43,7 @@ public class LegendsOfValor implements Game {
                 printer.printGreen("You've chosen: " + selector.getHero().getName() + "\n");
             }
 
+            // Create the party and start the movement loop
             party = new Party(heros);
             boolean improperMove = false;
             boolean printInfo = false;
@@ -51,12 +54,13 @@ public class LegendsOfValor implements Game {
                     printInfo = false;
                 }
 
-                // Initialize to -1 so the first time game checks for improper move it will be incremented to 0
+                // Turn based movement, check which hero should move and have moved
                 int heroIdx = 0;
                 boolean[] heroMoved = new boolean[heros.size()];
                 for (int i = 0; i < heroMoved.length; i++) {
                     heroMoved[i] = false;
                 }
+                // Makes sure that each hero has taken their turn
                 while (heroRemainsUnmoved(heroMoved)) {
                     gameMap.renderMap();
                     printGameDetails();
@@ -112,6 +116,7 @@ public class LegendsOfValor implements Game {
         }
     }
 
+    // Checks if any hero has not moved
     private boolean heroRemainsUnmoved(boolean[] heroMoved) {
         for (boolean moved : heroMoved) {
             if (!moved) {
@@ -121,6 +126,7 @@ public class LegendsOfValor implements Game {
         return false;
     }
 
+    // Prints the game details
     private void printInfo() {
         printer.clearScreen();
         printer.printYellow("\nMap cell meanings:\n");
@@ -142,6 +148,7 @@ public class LegendsOfValor implements Game {
     }
 
 
+    // Get the player input and sanitize it
     private String getPlayerInput() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
