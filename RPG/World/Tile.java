@@ -21,7 +21,7 @@ public class Tile {
                 this.content = "E";
                 break;
             default:
-                this.content = " ";
+                this.content = content;
                 break;
         }
     }

@@ -19,13 +19,15 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     public LegendsOfValorMap() {
         // Create the map
+        int heroIdx = 1;
         for (int i = 0; i < gameContent.length; i++) {
             for (int j = 0; j < gameContent[i].length; j++) {
                 if (i == 0 && (j - 1) % 3 == 0) {
                     gameContent[i][j] = new Tile("enemy");
                 }
                 else if (i == gameContent.length - 1 && (j - 1) % 3 == 0) {
-                    gameContent[i][j] = new Tile("hero");
+                    gameContent[i][j] = new Tile("H" + heroIdx);
+                    heroIdx++;
                 }
                 else {
                     gameContent[i][j] = new Tile("wild");
@@ -53,10 +55,8 @@ public class LegendsOfValorMap extends Randomness implements Map {
                 return "     ";
             case "E":
                 return "M    ";
-            case "H":
-                return "H    ";
             default:
-                return gameContent[row][col].getContent();
+                return gameContent[row][col].getContent() + "   ";
         }
     }
 
