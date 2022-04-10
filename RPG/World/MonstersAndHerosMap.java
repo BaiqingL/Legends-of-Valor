@@ -95,7 +95,6 @@ public class MonstersAndHerosMap extends Randomness implements Map {
         printer.printGreen("show information\n");
     }
 
-    @Override
     public boolean moveUp() {
         if (checkBoundaries(heroLocation[0] - 1, heroLocation[1])) {
             return false;
@@ -114,7 +113,6 @@ public class MonstersAndHerosMap extends Randomness implements Map {
         return true;
     }
 
-    @Override
     public boolean moveDown() {
         if (checkBoundaries(heroLocation[0] + 1, heroLocation[1])) {
             return false;
@@ -133,7 +131,6 @@ public class MonstersAndHerosMap extends Randomness implements Map {
         return true;
     }
 
-    @Override
     public boolean moveRight() {
         if (checkBoundaries(heroLocation[0], heroLocation[1] + 1)) {
             return false;
@@ -152,7 +149,6 @@ public class MonstersAndHerosMap extends Randomness implements Map {
         return true;
     }
 
-    @Override
     public boolean moveLeft() {
         if (checkBoundaries(heroLocation[0], heroLocation[1] - 1)) {
             return false;

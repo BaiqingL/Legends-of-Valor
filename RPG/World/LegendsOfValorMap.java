@@ -17,9 +17,10 @@ enum CellType {
 public class LegendsOfValorMap extends Randomness implements Map {
 
     // Create 2d array of tiles that is 8 by 8
+    private static final int HERO_COUNT = 3;
     private static final Tile[][] gameContent = new Tile[8][8];
     private final CellType[][] map = new CellType[8][8];
-    private final LocationTuple[] playerPosition = new LocationTuple[3];
+    private final LocationTuple[] playerPosition = new LocationTuple[HERO_COUNT];
 
     public LegendsOfValorMap() {
         // Create the content map
@@ -147,23 +148,59 @@ public class LegendsOfValorMap extends Randomness implements Map {
         }
     }
 
-    @Override
-    public boolean moveUp() {
-        return true;
+    public boolean moveUp(int heroIdx) {
+        int x = playerPosition[heroIdx].getX();
+        int y = playerPosition[heroIdx].getY();
+        Tile heroTile = gameContent[x][y];
+        if (x - 1 >= 0) {
+            gameContent[x][y] = new Tile("wild");
+            x -= 1;
+            playerPosition[heroIdx] = new LocationTuple(x, y);
+            gameContent[x][y] = heroTile;
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public boolean moveDown() {
-        return true;
+    public boolean moveDown(int heroIdx) {
+        int x = playerPosition[heroIdx].getX();
+        int y = playerPosition[heroIdx].getY();
+        Tile heroTile = gameContent[x][y];
+        if (x + 1 < gameContent.length) {
+            gameContent[x][y] = new Tile("wild");
+            x += 1;
+            playerPosition[heroIdx] = new LocationTuple(x, y);
+            gameContent[x][y] = heroTile;
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public boolean moveLeft() {
-        return true;
+    public boolean moveLeft(int heroIdx) {
+        int x = playerPosition[heroIdx].getX();
+        int y = playerPosition[heroIdx].getY();
+        Tile heroTile = gameContent[x][y];
+        if ((y - 2) % 3 != 0) {
+            gameContent[x][y] = new Tile("wild");
+            y -= 1;
+            playerPosition[heroIdx] = new LocationTuple(x, y);
+            gameContent[x][y] = heroTile;
+            return true;
+        }
+        return false;
     }
 
-    @Override
-    public boolean moveRight() {
-        return true;
+    public boolean moveRight(int heroIdx) {
+        int x = playerPosition[heroIdx].getX();
+        int y = playerPosition[heroIdx].getY();
+        Tile heroTile = gameContent[x][y];
+        if ((y + 2) % 3 != 0) {
+            gameContent[x][y] = new Tile("wild");
+            y += 1;
+            playerPosition[heroIdx] = new LocationTuple(x, y);
+            gameContent[x][y] = heroTile;
+            return true;
+        }
+        return false;
     }
 }

@@ -50,45 +50,75 @@ public class LegendsOfValor implements Game {
                     printInfo();
                     printInfo = false;
                 }
-                gameMap.renderMap();
 
-                if (improperMove) {
-                    printer.printRed("Improper move\n");
-                    improperMove = false;
+                // Initialize to -1 so the first time game checks for improper move it will be incremented to 0
+                int heroIdx = 0;
+                boolean[] heroMoved = new boolean[heros.size()];
+                for (int i = 0; i < heroMoved.length; i++) {
+                    heroMoved[i] = false;
                 }
-                printGameDetails();
-                String choice = getPlayerInput();
+                while (heroRemainsUnmoved(heroMoved)) {
+                    gameMap.renderMap();
+                    printGameDetails();
+                    if (improperMove) {
+                        printer.printRed("Improper move\n");
+                        improperMove = false;
+                    }
+                    printer.printYellow("Currently choosing action for Hero " + (heroIdx + 1) + ": " + party.getHeros().get(heroIdx).getName() + "\n");
+                    String choice = getPlayerInput();
 
-                switch (choice) {
-                    case "w" -> {
-                        if (!gameMap.moveUp()) {
-                            improperMove = true;
+                    switch (choice) {
+                        case "w" -> {
+                            if (!gameMap.moveUp(heroIdx)) {
+                                improperMove = true;
+                            } else {
+                                heroMoved[heroIdx] = true;
+                                heroIdx++;
+                            }
                         }
-                    }
-                    case "s" -> {
-                        if (!gameMap.moveDown()) {
-                            improperMove = true;
+                        case "s" -> {
+                            if (!gameMap.moveDown(heroIdx)) {
+                                improperMove = true;
+                            } else {
+                                heroMoved[heroIdx] = true;
+                                heroIdx++;
+                            }
                         }
-                    }
-                    case "a" -> {
-                        if (!gameMap.moveLeft()) {
-                            improperMove = true;
+                        case "a" -> {
+                            if (!gameMap.moveLeft(heroIdx)) {
+                                improperMove = true;
+                            } else {
+                                heroMoved[heroIdx] = true;
+                                heroIdx++;
+                            }
                         }
-                    }
-                    case "d" -> {
-                        if (!gameMap.moveRight()) {
-                            improperMove = true;
+                        case "d" -> {
+                            if (!gameMap.moveRight(heroIdx)) {
+                                improperMove = true;
+                            } else {
+                                heroMoved[heroIdx] = true;
+                                heroIdx++;
+                            }
                         }
-                    }
-                    case "q" -> {
-                        return;
-                    }
-                    case "i" -> printInfo = true;
-                    default -> {
+                        case "q" -> {
+                            return;
+                        }
+                        case "i" -> printInfo = true;
+                        default -> {
+                        }
                     }
                 }
             }
         }
+    }
+
+    private boolean heroRemainsUnmoved(boolean[] heroMoved) {
+        for (boolean moved : heroMoved) {
+            if (!moved) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void printInfo() {
@@ -122,6 +152,7 @@ public class LegendsOfValor implements Game {
             } else {
                 printer.clearScreen();
                 gameMap.renderMap();
+                printGameDetails();
                 printer.printRed("Incorrect choice\n");
             }
         }
