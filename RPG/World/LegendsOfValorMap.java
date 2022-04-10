@@ -12,7 +12,7 @@ enum CellType {
     INACCESSIBLE
 }
 
-public class LegendsOfValorMap {
+public class LegendsOfValorMap extends Randomness implements Map {
 
     private static String getOuterCellStr(char c) {
         StringBuilder str = new StringBuilder();
@@ -61,7 +61,8 @@ public class LegendsOfValorMap {
         }
     }
 
-    public static void renderMap() {
+    @Override
+    public void renderMap() {
         CellType[][] map = {
                 {CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS, CellType.INACCESSIBLE, CellType.NEXUS, CellType.NEXUS},
                 {CellType.PLAIN, CellType.PLAIN, CellType.INACCESSIBLE, CellType.CAVE, CellType.PLAIN, CellType.INACCESSIBLE, CellType.BUSH, CellType.BUSH},
@@ -108,5 +109,25 @@ public class LegendsOfValorMap {
         for (int i = 0; i < size * 3; i++) {
             System.out.print(printableMap.get(i));
         }
+    }
+
+    @Override
+    public boolean moveUp() {
+        return true;
+    }
+
+    @Override
+    public boolean moveDown() {
+        return true;
+    }
+
+    @Override
+    public boolean moveLeft() {
+        return true;
+    }
+
+    @Override
+    public boolean moveRight() {
+        return true;
     }
 }

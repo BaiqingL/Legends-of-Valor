@@ -1,7 +1,5 @@
 package RPG.Controllers;
 
-import RPG.Controllers.FancyPrint;
-import RPG.Controllers.Game;
 import RPG.Players.Hero;
 import RPG.Players.HeroSelector;
 import RPG.Players.Party;
@@ -14,7 +12,6 @@ import java.util.Scanner;
 
 public class MonstersAndHeros implements Game {
     private static final FancyPrint printer = new FancyPrint();
-    private int heroCount;
     private MonstersAndHerosMap gameMap;
     private Party party;
 
@@ -25,6 +22,7 @@ public class MonstersAndHeros implements Game {
     @Override
     public void startGame() {
         printer.clearScreen();
+        int heroCount;
         while (true) {
             Scanner scanner = new Scanner(System.in);
             printer.printYellow("Between 1 - 3, how many heros do you want to start with? ");
@@ -94,9 +92,7 @@ public class MonstersAndHeros implements Game {
                 case "q" -> {
                     return;
                 }
-                case "i" -> {
-                    printInfo = true;
-                }
+                case "i" -> printInfo = true;
                 default -> {
                 }
             }

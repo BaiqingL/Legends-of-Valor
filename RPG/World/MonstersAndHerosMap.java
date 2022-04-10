@@ -4,7 +4,7 @@ package RPG.World;
 import RPG.Controllers.FancyPrint;
 import RPG.Players.Party;
 
-public class MonstersAndHerosMap extends Randomness {
+public class MonstersAndHerosMap extends Randomness implements Map {
     private static final int ROWS = 8;
     private static final int COLUMNS = 8;
     private static final FancyPrint printer = new FancyPrint();
@@ -46,6 +46,7 @@ public class MonstersAndHerosMap extends Randomness {
         boardContent[heroX][heroY] = new Tile("hero");
     }
 
+    @Override
     public void renderMap() {
         // First go by row
         int idx = 0;
@@ -94,6 +95,7 @@ public class MonstersAndHerosMap extends Randomness {
         printer.printGreen("show information\n");
     }
 
+    @Override
     public boolean moveUp() {
         if (checkBoundaries(heroLocation[0] - 1, heroLocation[1])) {
             return false;
@@ -112,6 +114,7 @@ public class MonstersAndHerosMap extends Randomness {
         return true;
     }
 
+    @Override
     public boolean moveDown() {
         if (checkBoundaries(heroLocation[0] + 1, heroLocation[1])) {
             return false;
@@ -130,6 +133,7 @@ public class MonstersAndHerosMap extends Randomness {
         return true;
     }
 
+    @Override
     public boolean moveRight() {
         if (checkBoundaries(heroLocation[0], heroLocation[1] + 1)) {
             return false;
@@ -148,6 +152,7 @@ public class MonstersAndHerosMap extends Randomness {
         return true;
     }
 
+    @Override
     public boolean moveLeft() {
         if (checkBoundaries(heroLocation[0], heroLocation[1] - 1)) {
             return false;
@@ -187,7 +192,6 @@ public class MonstersAndHerosMap extends Randomness {
                 combatScene.initiateCombat();
             }
         }
-        return;
     }
 
 }
