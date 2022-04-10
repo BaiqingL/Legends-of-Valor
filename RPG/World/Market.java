@@ -9,6 +9,7 @@ import RPG.Players.Party;
 import java.util.List;
 import java.util.Scanner;
 
+// Market class
 public class Market {
     private static final ItemBuilder ITEM_BUILDER = new ItemBuilder();
     private static final FancyPrint printer = new FancyPrint();
@@ -19,11 +20,12 @@ public class Market {
     private final Party party;
     private Hero hero;
 
+    // Set player party
     public Market(Party party) {
         this.party = party;
-
     }
 
+    // Show the list of things that can be bought
     public void listOptions() {
         printer.clearScreen();
         Scanner scanner = new Scanner(System.in);
@@ -73,6 +75,8 @@ public class Market {
         }
 
         selected = false;
+
+        // Start the market loop
         while (!selected) {
 
             printer.printYellow("\nWelcome to the Market! You can only select one type of item to buy per visit\n");
@@ -120,6 +124,7 @@ public class Market {
         }
     }
 
+    // List all the spells
     private void listSpells() {
         printer.printCyan("\nSpells:\n");
         printer.printBlue("1. Ice 100 Gold\n");
@@ -147,6 +152,7 @@ public class Market {
         }
     }
 
+    // List all the potions
     private void listPotions() {
         printer.printBlue("\nPotions:\n");
         for (int i = 0; i < potions.size(); i++) {
@@ -173,6 +179,7 @@ public class Market {
         }
     }
 
+    // List all the weapons
     private void listWeapons() {
         printer.printRed("\nWeapons:\n");
         for (int i = 0; i < weapons.size(); i++) {
@@ -199,6 +206,7 @@ public class Market {
 
     }
 
+    // List all the armors
     private void listArmor() {
         printer.printGreen("\nArmor:\n");
         for (int i = 0; i < armors.size(); i++) {
@@ -225,6 +233,7 @@ public class Market {
 
     }
 
+    // Purchase an item and add it to the hero's inventory
     private boolean purchase( boolean buy, Item item) {
         Scanner scanner = new Scanner(System.in);
         if (buy) {

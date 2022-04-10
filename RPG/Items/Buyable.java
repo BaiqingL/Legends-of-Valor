@@ -2,8 +2,10 @@ package RPG.Items;
 
 import RPG.Players.Hero;
 
+// Represents a buyable item
 public interface Buyable {
 
-    public int getPrice();
-    public boolean buy(Hero hero);
+    int getPrice();
+
+    boolean buy(Hero hero);
 }

@@ -5,6 +5,7 @@ import RPG.Controllers.FancyPrint;
 import java.util.List;
 import java.util.Scanner;
 
+// Class that prompts the user to select a hero
 public class HeroSelector {
     private static final FancyPrint printer = new FancyPrint();
     private static final HeroBuilder heroBuilder = new HeroBuilder();
@@ -14,6 +15,7 @@ public class HeroSelector {
 
     }
 
+    // Prompts the user to select a hero
     public void promptHero() {
         int choice = promptClass();
         switch (choice) {
@@ -23,6 +25,7 @@ public class HeroSelector {
         }
     }
 
+    // Prompts the user to select a class
     private Hero promptHeroClass(List<Hero> heros) {
         printer.clearScreen();
         int choice;

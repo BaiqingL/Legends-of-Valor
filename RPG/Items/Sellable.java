@@ -2,7 +2,9 @@ package RPG.Items;
 
 import RPG.Players.Hero;
 
+// Sellable interface
 public interface Sellable {
-    public int getPrice();
-    public boolean sell(Hero hero);
+    int getPrice();
+
+    boolean sell(Hero hero);
 }

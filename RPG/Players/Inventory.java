@@ -1,16 +1,12 @@
 package RPG.Players;
 
-import RPG.Items.*;
-
 import RPG.Controllers.FancyPrint;
-import RPG.Items.Armor;
-import RPG.Items.Potion;
-import RPG.Items.Spell;
-import RPG.Items.Weapon;
+import RPG.Items.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// Inventory class that contains the players inventory
 public class Inventory {
     private static final FancyPrint printer = new FancyPrint();
     private final List<Potion> potions = new ArrayList<Potion>();
@@ -73,39 +69,39 @@ public class Inventory {
         potions.remove(potion);
     }
 
-    public void addItem(Item item){
-        if (item instanceof Spell){
-            addSpell( (Spell) item );
-        } else if (item instanceof Armor){
-            addArmor( (Armor) item );
-        } else if (item instanceof Weapon){
-            addWeapon( (Weapon) item );
-        } else if (item instanceof Potion){
-            addPotion( (Potion) item );
+    public void addItem(Item item) {
+        if (item instanceof Spell) {
+            addSpell((Spell) item);
+        } else if (item instanceof Armor) {
+            addArmor((Armor) item);
+        } else if (item instanceof Weapon) {
+            addWeapon((Weapon) item);
+        } else if (item instanceof Potion) {
+            addPotion((Potion) item);
         }
     }
 
-    public void removeItem(Item item){
-        if (item instanceof Spell){
-            removeSpell( (Spell) item );
-        } else if (item instanceof Armor){
-            removeArmor( (Armor) item );
-        } else if (item instanceof Weapon){
-            removeWeapon( (Weapon) item );
-        } else if (item instanceof Potion){
-            removePotion( (Potion) item );
+    public void removeItem(Item item) {
+        if (item instanceof Spell) {
+            removeSpell((Spell) item);
+        } else if (item instanceof Armor) {
+            removeArmor((Armor) item);
+        } else if (item instanceof Weapon) {
+            removeWeapon((Weapon) item);
+        } else if (item instanceof Potion) {
+            removePotion((Potion) item);
         }
     }
 
-    public boolean contains(Item item){
-        if (item instanceof Spell){
-            return this.spells.contains( (Spell) item );
-        } else if (item instanceof Armor){
-            return this.armors.contains( (Armor) item );
-        } else if (item instanceof Weapon){
-            return this.weapons.contains( (Weapon) item );
-        } else if (item instanceof Potion){
-            return this.potions.contains( (Potion) item );
+    public boolean contains(Item item) {
+        if (item instanceof Spell) {
+            return this.spells.contains((Spell) item);
+        } else if (item instanceof Armor) {
+            return this.armors.contains((Armor) item);
+        } else if (item instanceof Weapon) {
+            return this.weapons.contains((Weapon) item);
+        } else if (item instanceof Potion) {
+            return this.potions.contains((Potion) item);
         }
 
         return false;

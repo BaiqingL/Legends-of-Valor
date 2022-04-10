@@ -1,10 +1,8 @@
 package RPG.World;
 
 import RPG.Controllers.FancyPrint;
-import RPG.Items.Armor;
 import RPG.Items.Potion;
 import RPG.Items.Spell;
-import RPG.Items.Weapon;
 import RPG.Monsters.Monster;
 import RPG.Monsters.MonsterBuilder;
 import RPG.Players.Hero;
@@ -21,12 +19,14 @@ public class Combat extends Randomness {
     private final MonsterBuilder monsterBuilder = new MonsterBuilder();
     private final List<Monster> monsters;
 
+    // Combat class to handle all combat data
     public Combat(Party party) {
         this.party = party;
         this.heros = this.party.getHeros();
         monsters = monsterBuilder.buildMonsters(party.getPartySize());
     }
 
+    // Start the combat sequence
     public void initiateCombat() {
         boolean invalidMove = false;
         printer.clearScreen();
@@ -52,7 +52,7 @@ public class Combat extends Randomness {
                         if (monsters.get(partyIdx).getHp() <= 0) {
                             break;
                         }
-                        if ( attack(heros.get(partyIdx), monsters.get(partyIdx) )) {
+                        if (attack(heros.get(partyIdx), monsters.get(partyIdx))) {
                             return;
                         }
                         break;
@@ -72,6 +72,7 @@ public class Combat extends Randomness {
         }
     }
 
+    // Information about the combat
     private void combatInfo() {
         printer.clearScreen();
 
@@ -89,6 +90,7 @@ public class Combat extends Randomness {
 
     }
 
+    // Attack the enemy with a spell
     private void useSpell(Hero hero, Monster target) {
         while (true) {
             List<Spell> spells = hero.getInventory().getSpells();
@@ -129,6 +131,7 @@ public class Combat extends Randomness {
         }
     }
 
+    // Replenish the hero's stats with potions
     private void usePotion(Hero hero) {
         while (true) {
             List<Potion> potions = hero.getInventory().getPotions();
@@ -152,7 +155,7 @@ public class Combat extends Randomness {
                     hero.getInventory().removePotion(choice - 1);
                     switch (potion.getName()) {
                         case "Healing Potion":
-                            hero.setHp( hero.getHp() + potion.getIncreaseAmount() );
+                            hero.setHp(hero.getHp() + potion.getIncreaseAmount());
                             return;
                         case "Strength Potion":
                             hero.increaseStrength(potion.getIncreaseAmount());
@@ -176,14 +179,15 @@ public class Combat extends Randomness {
         }
     }
 
+    // Generic attack method
     private boolean attack(Hero hero, Monster target) {
         // (strength + weapon damage)*0.05
         int strengthTotal = 0;
         strengthTotal += hero.getStrength();
-        if(hero.getInventory().getWeapons().size()>0) {
+        if (hero.getInventory().getWeapons().size() > 0) {
             strengthTotal += hero.getInventory().getWeapons().get(0).getDamage();
         }
-        int damagePurposed = (int)(strengthTotal * 0.05);
+        int damagePurposed = (int) (strengthTotal * 0.05);
 
         if (hitMonsterLands()) {
             if (enemyTakeDamage(target, damagePurposed)) {
@@ -223,6 +227,7 @@ public class Combat extends Randomness {
         return false;
     }
 
+    // Check if hero lands a hit on the monster
     private boolean hitMonsterLands() {
         // Monster dodge dodge_chance *.01
         for (Monster monster : monsters) {
@@ -235,14 +240,7 @@ public class Combat extends Randomness {
         return true;
     }
 
-//    private int calculateArmorDefense(int incomingDamage) {
-//        int armorDefense = 0;
-//        for (Armor armor : party.getInventory().getArmors()) {
-//            armorDefense += armor.getDamageReduction();
-//        }
-//        return incomingDamage - armorDefense;
-//    }
-
+    // Check if monster lands a hit on the hero
     private boolean hitHeroLands() {
         // Hero dodge_chance *.002
         for (Hero hero : party.getHeros()) {
@@ -258,12 +256,12 @@ public class Combat extends Randomness {
     // Returns true if enemy dies
     // False if game continues
     private boolean enemyTakeDamage(Monster monster, int damage) {
-        monster.decreaseHp( damage );
+        monster.decreaseHp(damage);
         return monster.getHp() <= 0;
     }
 
     private boolean heroTakeDamage(Hero hero, int damage) {
-        hero.setHp( hero.getHp() -  damage );
+        hero.setHp(hero.getHp() - damage);
         return hero.getHp() <= 0;
     }
 
@@ -273,7 +271,7 @@ public class Combat extends Randomness {
         printer.printYellow("They now have " + monster.getHp() + " health.\n");
     }
 
-    private void logHeroDamage(Hero hero , double damage) {
+    private void logHeroDamage(Hero hero, double damage) {
         printer.clearScreen();
         printer.printRed(hero.getName() + " took " + (int) damage + " damage!\n");
         printer.printYellow("They now have " + hero.getHp() + " health.\n");
@@ -281,7 +279,7 @@ public class Combat extends Randomness {
 
     private boolean allHerosDead() {
         for (Hero hero : this.heros) {
-            if (hero.getHp() > 0){
+            if (hero.getHp() > 0) {
                 return false;
             }
         }
@@ -290,7 +288,7 @@ public class Combat extends Randomness {
 
     private boolean allMonstersDead() {
         for (Monster monster : this.monsters) {
-            if (monster.getHp() > 0){
+            if (monster.getHp() > 0) {
                 return false;
             }
         }

@@ -3,15 +3,17 @@ package RPG.Monsters;
 import RPG.Controllers.FancyPrint;
 import RPG.World.Randomness;
 
+// Monster class and extend randomness for damage generation
 public abstract class Monster extends Randomness {
     private final String name;
     private final FancyPrint printer = new FancyPrint();
-    private int hp;
     private final int level;
+    private int hp;
     private int damage;
     private int defense;
     private int dodgeChance;
 
+    // Constructor
     public Monster(String name, int level, int damage, int defense, int dodgeChance) {
         this.name = name;
         this.level = level;
@@ -21,6 +23,7 @@ public abstract class Monster extends Randomness {
         this.dodgeChance = dodgeChance;
     }
 
+    // Getters
     public void decreaseDamage(int amount) {
         this.damage -= amount;
         if (this.damage < 0) {
@@ -66,7 +69,7 @@ public abstract class Monster extends Randomness {
         return hp;
     }
 
-    public void decreaseHp(int amount){
+    public void decreaseHp(int amount) {
         this.hp -= amount;
     }
 
@@ -74,6 +77,7 @@ public abstract class Monster extends Randomness {
         return getRandomNumber(0, 100) > dodgeChance;
     }
 
+    // Prints the monster's stats
     public void print() {
         printer.printYellow(this.name + " ");
         String monsterType = this.getClass().getSimpleName();

@@ -1,8 +1,9 @@
 package RPG.Players;
 
+// Abstract class Hero that is extended by the playable classes
 public abstract class Hero {
-    private String name;
     private final Inventory inventory = new Inventory();
+    private final String name;
     private int level = 1;
     private int hp = 100;
     private int mana;
@@ -12,7 +13,7 @@ public abstract class Hero {
     private int money;
     private int exp;
 
-    public Hero(String name, int mana, int strength, int dexterity, int agility, int money, int exp){
+    public Hero(String name, int mana, int strength, int dexterity, int agility, int money, int exp) {
         this.name = name;
         this.mana = mana;
         this.strength = strength;
@@ -100,8 +101,8 @@ public abstract class Hero {
 
     public void increaseExp(int amount) {
         this.exp += amount;
-        if(this.exp >= this.level * 10){
-            this.level+=1;
+        if (this.exp >= this.level * 10) {
+            this.level += 1;
         }
         this.exp = 0;
     }

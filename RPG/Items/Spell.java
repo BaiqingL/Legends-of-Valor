@@ -2,8 +2,7 @@ package RPG.Items;
 
 import RPG.Players.Hero;
 
-import java.util.List;
-
+// Spell class that contains damage and use logic
 public class Spell extends Item {
 
     private final int manaRequired;

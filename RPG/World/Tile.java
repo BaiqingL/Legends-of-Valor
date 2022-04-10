@@ -1,5 +1,6 @@
 package RPG.World;
 
+// Tile class to show contents
 public class Tile {
     private String content;
 

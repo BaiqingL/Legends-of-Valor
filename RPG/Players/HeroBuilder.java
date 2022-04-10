@@ -3,6 +3,7 @@ package RPG.Players;
 import java.util.ArrayList;
 import java.util.List;
 
+// Builder that generates Heros for player to choose
 public class HeroBuilder {
 
     public HeroBuilder() {

@@ -1,5 +1,6 @@
 package RPG.Items;
 
+// Weapons class to include damage data
 public class Weapon extends Item {
 
     private final int damage;

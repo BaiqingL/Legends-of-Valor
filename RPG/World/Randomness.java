@@ -1,5 +1,6 @@
 package RPG.World;
 
+// Abstract class to generate random numbers
 public abstract class Randomness {
     public Randomness() {
 

@@ -23,6 +23,7 @@ public class MonstersAndHeros implements Game {
     public void startGame() {
         printer.clearScreen();
         int heroCount;
+        // Main game loop
         while (true) {
             Scanner scanner = new Scanner(System.in);
             printer.printYellow("Between 1 - 3, how many heros do you want to start with? ");
@@ -99,6 +100,7 @@ public class MonstersAndHeros implements Game {
         }
     }
 
+    // Print information regarding the current state of the game
     private void printInfo() {
         printer.clearScreen();
         for (Hero hero : party.getHeros()) {
@@ -112,6 +114,7 @@ public class MonstersAndHeros implements Game {
         printer.clearScreen();
     }
 
+    // Returns the player input and handles the case where the player enters a non-valid input
     private String getPlayerInput() {
         Scanner scanner = new Scanner(System.in);
         while (true) {

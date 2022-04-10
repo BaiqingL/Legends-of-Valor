@@ -2,10 +2,11 @@ package RPG.Players;
 
 import java.util.List;
 
+// Party class that contains all playable information and data
 public class Party {
     private final List<Hero> heros;
-    private int money;
     private final int level = 1;
+    private int money;
     private int exp = 0;
     private int mana;
 
