@@ -19,6 +19,16 @@ public class LegendsOfValor implements Game {
         gameMap = new LegendsOfValorMap();
     }
 
+    private void printGameDetails() {
+        printer.printYellow("\nControls:\n");
+        printer.printYellow("w: move up\n");
+        printer.printYellow("s: move down\n");
+        printer.printYellow("a: move left\n");
+        printer.printYellow("d: move right\n");
+        printer.printYellow("i: show info\n");
+        printer.printYellow("q: quit\n");
+    }
+
     @Override
     public void startGame() {
         printer.clearScreen();
@@ -46,6 +56,7 @@ public class LegendsOfValor implements Game {
                     printer.printRed("Improper move\n");
                     improperMove = false;
                 }
+                printGameDetails();
                 String choice = getPlayerInput();
 
                 switch (choice) {
@@ -82,6 +93,13 @@ public class LegendsOfValor implements Game {
 
     private void printInfo() {
         printer.clearScreen();
+        printer.printYellow("\nMap cell meanings:\n");
+        printer.printGreen("N: Nexus, acts as market place for items\n");
+        printer.printGreen("B: Bush, boost dexterity by 10%\n");
+        printer.printGreen("K: Koulou, boost strength by 10%\n");
+        printer.printGreen("C: Cave, boost agility by 10%\n");
+        printer.printRed("I: Inaccessible, borders that can not be accessed\n");
+
         for (Hero hero : party.getHeros()) {
             printer.printYellow(hero.toString() + "\n");
             printer.printGreen("Money: " + party.getMoney() + "\n");
