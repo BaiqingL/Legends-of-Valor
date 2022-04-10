@@ -73,10 +73,10 @@ public class MonstersAndHerosMap extends Randomness implements Map {
             printer.printWhite(" ");
             switch (boardContent[row][i].getContent()) {
                 // Use fancy emojis!
-                case "M" -> printer.printWhite("\uD83C\uDFE0");
-                case "H" -> printer.printWhite("\uD83E\uDDDD");
-                case "X" -> printer.printWhite("\uD83D\uDEA7");
-                case "W" -> printer.printWhite("\uD83C\uDF31");
+                case "M" -> printer.printYellow("M");
+                case "H" -> printer.printBlue("H");
+                case "X" -> printer.printRed("X");
+                case "W" -> printer.printGreen("W");
             }
             printer.printWhite(" ||");
         }
