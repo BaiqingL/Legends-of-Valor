@@ -17,6 +17,12 @@ public class Tile {
             case "blocked":
                 this.content = "X";
                 break;
+            case "enemy":
+                this.content = "E";
+                break;
+            default:
+                this.content = " ";
+                break;
         }
     }
 

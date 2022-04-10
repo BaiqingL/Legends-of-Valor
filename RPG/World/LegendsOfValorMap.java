@@ -14,6 +14,26 @@ enum CellType {
 
 public class LegendsOfValorMap extends Randomness implements Map {
 
+    // Create 2d array of tiles that is 8 by 8
+    private static Tile[][] gameContent = new Tile[8][8];
+
+    public LegendsOfValorMap() {
+        // Create the map
+        for (int i = 0; i < gameContent.length; i++) {
+            for (int j = 0; j < gameContent[i].length; j++) {
+                if (i == 0 && (j - 1) % 3 == 0) {
+                    gameContent[i][j] = new Tile("enemy");
+                }
+                else if (i == gameContent.length - 1 && (j - 1) % 3 == 0) {
+                    gameContent[i][j] = new Tile("hero");
+                }
+                else {
+                    gameContent[i][j] = new Tile("wild");
+                }
+            }
+        }
+    }
+
     private static String getOuterCellStr(char c) {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < 2; i++) {
@@ -28,18 +48,15 @@ public class LegendsOfValorMap extends Randomness implements Map {
     }
 
     private static String getCellComponent(int row, int col) {
-        if (row == 7 && col == 1) {
-            return "H1   ";
-        } else if (row == 1 && col == 3) {
-            return "H2   ";
-        } else if (row == 3 && col == 1) {
-            return "   M1";
-        } else if (row == 1 && col == 4) {
-            return "   M2";
-        } else if (row == 3 && col == 6) {
-            return "H3 M3";
-        } else {
-            return "     ";
+        switch (gameContent[row][col].getContent()) {
+            case "W":
+                return "     ";
+            case "E":
+                return "M    ";
+            case "H":
+                return "H    ";
+            default:
+                return gameContent[row][col].getContent();
         }
     }
 
