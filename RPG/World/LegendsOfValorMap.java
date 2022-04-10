@@ -1,5 +1,7 @@
 package RPG.World;
 
+import RPG.Controllers.LocationTuple;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
     // Create 2d array of tiles that is 8 by 8
     private static final Tile[][] gameContent = new Tile[8][8];
     private final CellType[][] map = new CellType[8][8];
+    private final LocationTuple[] playerPosition = new LocationTuple[3];
 
     public LegendsOfValorMap() {
         // Create the content map
@@ -27,6 +30,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
                     gameContent[i][j] = new Tile("enemy");
                 } else if (i == gameContent.length - 1 && (j - 1) % 3 == 0) {
                     gameContent[i][j] = new Tile("H" + heroIdx);
+                    playerPosition[heroIdx - 1] = new LocationTuple(i, j);
                     heroIdx++;
                 } else {
                     gameContent[i][j] = new Tile("wild");
