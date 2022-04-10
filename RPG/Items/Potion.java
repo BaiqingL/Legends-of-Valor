@@ -1,6 +1,8 @@
 package RPG.Items;
 
-public class Potion extends Item {
+import RPG.Players.Hero;
+
+public class Potion extends Item implements Consumable{
     private final int increaseAmount;
     private final String statToIncrease;
 
@@ -18,5 +20,30 @@ public class Potion extends Item {
 
     public String getStatToIncrease() {
         return statToIncrease;
+    }
+
+    @Override
+    public boolean consume(Hero hero) {
+        for (String attr : this.statToIncrease.split(" ")) {
+            switch (attr){
+                case "Health":
+                    hero.setHp(hero.getHp() + this.increaseAmount);
+                    break;
+                case "Strength":
+                    hero.increaseStrength(this.increaseAmount);
+                    break;
+                case "Mana":
+                    hero.increaseMana(this.increaseAmount);
+                    break;
+                case "Agility":
+                    hero.increaseAgility(this.increaseAmount);
+                    break;
+                case "All":
+                    hero.increaseAll(this.increaseAmount);
+                    break;
+            }
+            return true;
+        }
+        return false;
     }
 }

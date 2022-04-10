@@ -77,11 +77,10 @@ public class Combat extends Randomness {
         printer.clearScreen();
 
         for (Hero hero : this.party.getHeros()) {
-            printer.printBlue(hero.getClass() + " " + hero.getName() + " has " + hero.getHp() + " HP left.\n");
+            printer.printBlue(hero.getClass().getSimpleName() + " " + hero.getName() + " has " + hero.getHp() + " HP left.\n");
         }
-        System.out.println();
         for (Monster monster : this.monsters) {
-            printer.printRed(monster.getClass() + " " + monster.getName() + " has " + monster.getHp() + " HP left.\n");
+            printer.printRed(monster.getClass().getSimpleName() + " " + monster.getName() + " has " + monster.getHp() + " HP left.\n");
         }
 
         printer.printYellow("Press Enter to continue...");
@@ -153,25 +152,7 @@ public class Combat extends Randomness {
                 if (choice > 0 && choice <= potions.size()) {
                     Potion potion = potions.get(choice - 1);
                     hero.getInventory().removePotion(choice - 1);
-                    switch (potion.getName()) {
-                        case "Healing Potion":
-                            hero.setHp(hero.getHp() + potion.getIncreaseAmount());
-                            return;
-                        case "Strength Potion":
-                            hero.increaseStrength(potion.getIncreaseAmount());
-                            return;
-                        case "Magic Potion":
-                            hero.increaseMana(potion.getIncreaseAmount());
-                            return;
-                        case "Luck Elixir":
-                            hero.increaseAgility(potion.getIncreaseAmount());
-                        case "Mermaid Tears":
-                            hero.increaseAll(potion.getIncreaseAmount());
-                            return;
-                        case "Ambrosia":
-                            hero.increaseAll(potion.getIncreaseAmount());
-                            return;
-                    }
+                    potion.consume(hero);
                 }
             } catch (Exception ignored) {
                 printer.printRed("Invalid choice\n");
