@@ -203,4 +203,14 @@ public class LegendsOfValorMap extends Randomness implements Map {
         }
         return false;
     }
+
+    public void backToNexus(int heroIdx) {
+        int x = playerPosition[heroIdx].getX();
+        int y = playerPosition[heroIdx].getY();
+        Tile heroTile = gameContent[x][y];
+        gameContent[x][y] = new Tile("wild");
+        x = map.length - 1;
+        playerPosition[heroIdx] = new LocationTuple(x, y);
+        gameContent[x][y] = heroTile;
+    }
 }

@@ -26,6 +26,7 @@ public class LegendsOfValor implements Game {
         printer.printYellow("a: move left\n");
         printer.printYellow("d: move right\n");
         printer.printYellow("i: show info\n");
+        printer.printYellow("b: Back to Nexus\n");
         printer.printYellow("q: quit\n");
     }
 
@@ -104,6 +105,11 @@ public class LegendsOfValor implements Game {
                                 heroIdx++;
                             }
                         }
+                        case "b" -> {
+                            gameMap.backToNexus(heroIdx);
+                            heroMoved[heroIdx] = true;
+                            heroIdx++;
+                        }
                         case "q" -> {
                             return;
                         }
@@ -154,7 +160,13 @@ public class LegendsOfValor implements Game {
         while (true) {
             printer.printYellow("Input: ");
             String choice = scanner.nextLine().toLowerCase(Locale.ROOT);
-            if (choice.equals("w") || choice.equals("a") || choice.equals("s") || choice.equals("d") || choice.equals("q") || choice.equals("i")) {
+            if (choice.equals("w") ||
+                    choice.equals("a") ||
+                    choice.equals("s") ||
+                    choice.equals("d") ||
+                    choice.equals("b") ||
+                    choice.equals("q") ||
+                    choice.equals("i")) {
                 return choice;
             } else {
                 printer.clearScreen();
