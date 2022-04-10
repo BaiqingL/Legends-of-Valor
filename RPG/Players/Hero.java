@@ -1,6 +1,6 @@
 package RPG.Players;
 
-public abstract class Hero {
+public abstract class Hero implements Teleportable{
     private String name;
     private final Inventory inventory = new Inventory();
     private int level = 1;
@@ -11,6 +11,7 @@ public abstract class Hero {
     private int agility;
     private int money;
     private int exp;
+    private final int[] location = new int[2];
 
     public Hero(String name, int mana, int strength, int dexterity, int agility, int money, int exp){
         this.name = name;
@@ -121,7 +122,32 @@ public abstract class Hero {
         return "Name: " + name + " Mana: " + mana + " Strength: " + strength + " Dexterity: " + dexterity + " Agility: " + agility + " Level: " + level;
     }
 
-
     // Level up favors strength and agility
     public abstract void levelUpBoost();
+
+    public int[] getLocation() {
+        return this.location;
+    }
+
+    public int getX() {
+        return this.location[0];
+    }
+
+    public int getY() {
+        return this.location[1];
+    }
+
+    public void setX(int x){
+        this.location[0] = x;
+    }
+
+    public void setY(int y){
+        this.location[1] = y;
+    }
+
+    @Override
+    public void teleport(int x, int y) {
+        setX(x);
+        setY(y);
+    }
 }

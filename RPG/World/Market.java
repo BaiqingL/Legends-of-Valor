@@ -28,40 +28,17 @@ public class Market {
         printer.clearScreen();
         Scanner scanner = new Scanner(System.in);
 
-        boolean selected = false;
-        while (!selected){
-            printer.printYellow("Choose a hero to buy for\n");
+        while (true){
+            printer.printYellow("Welcome to the Market! Choose a hero to enter\n");
             for (int i = 0; i< this.party.getHeros().size(); i++) {
                 printer.printYellow((i+1) +". "+ this.party.getHeros().get(i).getName()+"\n");
             }
 
             try {
                 int choice = scanner.nextInt();
-                if (choice > 0 && choice <= 6) {
-                    switch (choice) {
-                        case 1:
-                            this.hero = this.party.getHeros().get(0);
-                            selected = true;
-                            break;
-                        case 2:
-                            if(this.party.getPartySize() < 2){
-                                printer.clearScreen();
-                                printer.printRed("Invalid choice.");
-                                break;
-                            }
-                            this.hero = this.party.getHeros().get(1);
-                            selected = true;
-                            break;
-                        case 3:
-                            if(this.party.getPartySize() < 3 ){
-                                printer.clearScreen();
-                                printer.printRed("Invalid choice.");
-                                break;
-                            }
-                            this.hero = this.party.getHeros().get(2);
-                            selected = true;
-                            break;
-                    }
+                if (choice > 0 && choice <= party.getPartySize()) {
+                    this.hero = this.party.getHeros().get(choice -1);
+                    break;
                 } else {
                     printer.clearScreen();
                     printer.printRed("Invalid choice.");
@@ -72,10 +49,47 @@ public class Market {
             }
         }
 
-        selected = false;
+
+
+        while (true){
+            printer.printYellow("Would you like to buy or sell items for "+hero.getName()+"?\n");
+            printer.printYellow("1. Buy\n");
+            printer.printYellow("2. Sell\n");
+            try {
+                int choice = scanner.nextInt();
+                if (choice > 0 && choice <= 2) {
+                    switch (choice){
+                        case 1:
+                            listBuyables();;
+                            return;
+                        case 2:
+                            if(hero.getInventory().getAllItems().size() < 1){
+                                printer.printRed("No Items to Sell\n");
+                                break;
+                            }
+                            listSellables();
+                            return;
+                    }
+                } else {
+                    printer.clearScreen();
+                    printer.printRed("Invalid choice.");
+                }
+            } catch (Exception ignored) {
+                printer.clearScreen();
+                printer.printRed("Wrong input\n");
+            }
+        }
+
+
+    }
+
+    private void listBuyables () {
+        Scanner scanner = new Scanner(System.in);
+
+        boolean selected = false;
         while (!selected) {
 
-            printer.printYellow("\nWelcome to the Market! You can only select one type of item to buy per visit\n");
+            printer.printYellow("\nYou can only select one type of item to buy per visit\n");
 
             printer.printGreen("You have " + hero.getMoney() + " gold.\n");
             printer.printBlue("1. Buy potions\n");
@@ -115,7 +129,46 @@ public class Market {
                 }
             } catch (Exception ignored) {
                 printer.clearScreen();
-                printer.printRed("Wrong input");
+                printer.printRed("Wrong input\n");
+            }
+        }
+    }
+
+    private void listSellables () {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true){
+            List<Item> sellList = hero.getInventory().getAllItems();
+            printer.printYellow("\nInventory:\n");
+            for (int i = 0; i < sellList.size(); i++) {
+                printer.printYellow((i+1) +". "+ sellList.get(i).getName()+"\n");
+            }
+            try {
+                int choice = scanner.nextInt();
+                if (choice > 0 && choice <= sellList.size()) {
+                    Item sellItem = sellList.get(choice-1);
+                    if(sellItem.sell(hero)){
+                        printer.printGreen("You sold "+ sellItem.getName() + " for "+sellItem.getPrice()+" gold\n");
+                        if (sellList.size() <= 1){
+                            printer.printYellow("No more Items to sell...\n");
+                            break;
+                        }
+                        printer.printYellow("Do you want to keep Selling? (y/n): ");
+                        String input = scanner.next().toLowerCase();
+                        if (input.equals("n")) {
+                            return;
+                        }
+                        continue;
+                    } else {
+                        printer.printRed("Invalid Item.");
+                    }
+                } else {
+                    printer.clearScreen();
+                    printer.printRed("Invalid choice.");
+                }
+            } catch (Exception ignored) {
+                printer.clearScreen();
+                printer.printRed("Wrong input\n");
             }
         }
     }

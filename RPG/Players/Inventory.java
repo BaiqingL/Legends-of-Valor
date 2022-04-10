@@ -37,6 +37,15 @@ public class Inventory {
         return armors;
     }
 
+    public List<Item> getAllItems(){
+        List<Item> items = new ArrayList<Item>();
+        items.addAll(this.potions);
+        items.addAll(this.weapons);
+        items.addAll(this.armors);
+        items.addAll(this.spells);
+        return items;
+    }
+
     public void removePotion(int choice) {
         potions.remove(choice);
     }

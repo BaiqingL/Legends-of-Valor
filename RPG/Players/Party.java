@@ -15,6 +15,8 @@ public class Party {
             money += hero.getMoney();
             exp += hero.getExp();
         }
+
+
     }
 
     public List<Hero> getHeros() {
@@ -62,5 +64,6 @@ public class Party {
     public void recieveMoney(int money) {
         this.money += money;
     }
+
 
 }
