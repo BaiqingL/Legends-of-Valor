@@ -39,28 +39,28 @@ public class Market {
                 int choice = scanner.nextInt();
                 if (choice > 0 && choice <= 6) {
                     switch (choice) {
-                        case 1:
+                        case 1 -> {
                             this.hero = this.party.getHeros().get(0);
                             selected = true;
-                            break;
-                        case 2:
-                            if(this.party.getPartySize() < 2){
+                        }
+                        case 2 -> {
+                            if (this.party.getPartySize() < 2) {
                                 printer.clearScreen();
                                 printer.printRed("Invalid choice.");
                                 break;
                             }
                             this.hero = this.party.getHeros().get(1);
                             selected = true;
-                            break;
-                        case 3:
-                            if(this.party.getPartySize() < 3 ){
+                        }
+                        case 3 -> {
+                            if (this.party.getPartySize() < 3) {
                                 printer.clearScreen();
                                 printer.printRed("Invalid choice.");
                                 break;
                             }
                             this.hero = this.party.getHeros().get(2);
                             selected = true;
-                            break;
+                        }
                     }
                 } else {
                     printer.clearScreen();
@@ -167,7 +167,7 @@ public class Market {
                     printer.printRed("Invalid choice.\n");
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
                 printer.printRed("Wrong input.\n");
             }
         }
@@ -231,18 +231,13 @@ public class Market {
             printer.printGreen("You bought " + item.getName() + " for " + item.getPrice() + " gold.\n");
             printer.printYellow("Do you want to keep buying? (y/n): ");
             String input = scanner.next().toLowerCase();
-            if (input.equals("n")) {
-                return true;
-            }
+            return input.equals("n");
         } else {
             printer.printRed("You can't buy this item.\n");
             printer.printYellow("Would you like to quit? (y/n): ");
             String input = scanner.next().toLowerCase();
-            if (input.equals("y")) {
-                return true;
-            }
+            return input.equals("y");
         }
-        return false;
     }
 
 
