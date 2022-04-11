@@ -124,6 +124,14 @@ public class LegendsOfValor implements Game {
                         default -> {
                         }
                     }
+
+                    // Check for win loss condition
+                    if (gameMap.checkHeroReachedEnd()) {
+                        printer.clearScreen();
+                        printer.printGreen("You've reached the end!\n");
+                        printer.printGreen("You win!\n");
+                        System.exit(0);
+                    }
                 }
             }
         }

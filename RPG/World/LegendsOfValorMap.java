@@ -228,4 +228,13 @@ public class LegendsOfValorMap extends Randomness implements Map {
         playerPosition[heroIdx] = new LocationTuple(targetX, targetY);
         playerPosition[targetHeroIdx] = new LocationTuple(sourceX, sourceY);
     }
+
+    public boolean checkHeroReachedEnd() {
+        for (int i = 0; i < playerPosition.length; i++) {
+            if (playerPosition[i].getX() == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
