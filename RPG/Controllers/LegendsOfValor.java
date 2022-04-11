@@ -133,6 +133,14 @@ public class LegendsOfValor implements Game {
                         System.exit(0);
                     }
                 }
+
+                // Heros finished, now move monsters
+                gameMap.moveMonsters();
+                if (gameMap.checkMonsterReachedEnd()) {
+                    printer.clearScreen();
+                    printer.printRed("You've been defeated!\n");
+                    System.exit(0);
+                }
             }
         }
     }

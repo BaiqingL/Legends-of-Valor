@@ -231,6 +231,27 @@ public class LegendsOfValorMap extends Randomness implements Map {
         playerPosition[targetHeroIdx] = new LocationTuple(sourceX, sourceY);
     }
 
+    public void moveMonsters() {
+        for (int i = 0; i < enemyPosition.size(); i++) {
+            int x = enemyPosition.get(i).getX();
+            int y = enemyPosition.get(i).getY();
+            Tile monsterTile = gameContent[x][y];
+            gameContent[x][y] = new Tile("wild");
+            x++;
+            enemyPosition.set(i, new LocationTuple(x, y));
+            gameContent[x][y] = monsterTile;
+        }
+    }
+
+    public boolean checkMonsterReachedEnd() {
+        for (int i = 0; i < enemyPosition.size(); i++) {
+            if (enemyPosition.get(i).getX() == map.length - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean checkHeroReachedEnd() {
         for (int i = 0; i < playerPosition.length; i++) {
             if (playerPosition[i].getX() == 0) {
