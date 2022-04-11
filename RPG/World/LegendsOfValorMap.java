@@ -150,16 +150,33 @@ public class LegendsOfValorMap extends Randomness implements Map {
         }
     }
 
+    private boolean checkMovable(LocationTuple destination) {
+        for (LocationTuple location : playerPosition) {
+            if (location.equals(destination)) {
+                return false;
+            }
+        }
+        for (LocationTuple location : enemyPosition) {
+            if (location.equals(destination)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean moveUp(int heroIdx) {
         int x = playerPosition[heroIdx].getX();
         int y = playerPosition[heroIdx].getY();
         Tile heroTile = gameContent[x][y];
         if (x - 1 >= 0) {
-            gameContent[x][y] = new Tile("wild");
-            x -= 1;
-            playerPosition[heroIdx] = new LocationTuple(x, y);
-            gameContent[x][y] = heroTile;
-            return true;
+            LocationTuple destination = new LocationTuple(x - 1, y);
+            if (checkMovable(destination)) {
+                gameContent[x][y] = new Tile("wild");
+                x -= 1;
+                playerPosition[heroIdx] = destination;
+                gameContent[x][y] = heroTile;
+                return true;
+            }
         }
         return false;
     }
@@ -168,12 +185,15 @@ public class LegendsOfValorMap extends Randomness implements Map {
         int x = playerPosition[heroIdx].getX();
         int y = playerPosition[heroIdx].getY();
         Tile heroTile = gameContent[x][y];
-        if (x + 1 < gameContent.length) {
-            gameContent[x][y] = new Tile("wild");
-            x += 1;
-            playerPosition[heroIdx] = new LocationTuple(x, y);
-            gameContent[x][y] = heroTile;
-            return true;
+        if (x + 1 >= 0) {
+            LocationTuple destination = new LocationTuple(x + 1, y);
+            if (checkMovable(destination)) {
+                gameContent[x][y] = new Tile("wild");
+                x++;
+                playerPosition[heroIdx] = destination;
+                gameContent[x][y] = heroTile;
+                return true;
+            }
         }
         return false;
     }
@@ -183,11 +203,14 @@ public class LegendsOfValorMap extends Randomness implements Map {
         int y = playerPosition[heroIdx].getY();
         Tile heroTile = gameContent[x][y];
         if ((y - 2) % 3 != 0) {
-            gameContent[x][y] = new Tile("wild");
-            y -= 1;
-            playerPosition[heroIdx] = new LocationTuple(x, y);
-            gameContent[x][y] = heroTile;
-            return true;
+            LocationTuple destination = new LocationTuple(x, y - 1);
+            if (checkMovable(destination)) {
+                gameContent[x][y] = new Tile("wild");
+                y -= 1;
+                playerPosition[heroIdx] = destination;
+                gameContent[x][y] = heroTile;
+                return true;
+            }
         }
         return false;
     }
@@ -197,11 +220,14 @@ public class LegendsOfValorMap extends Randomness implements Map {
         int y = playerPosition[heroIdx].getY();
         Tile heroTile = gameContent[x][y];
         if ((y + 2) % 3 != 0) {
-            gameContent[x][y] = new Tile("wild");
-            y += 1;
-            playerPosition[heroIdx] = new LocationTuple(x, y);
-            gameContent[x][y] = heroTile;
-            return true;
+            LocationTuple destination = new LocationTuple(x, y + 1);
+            if (checkMovable(destination)) {
+                gameContent[x][y] = new Tile("wild");
+                y += 1;
+                playerPosition[heroIdx] = destination;
+                gameContent[x][y] = heroTile;
+                return true;
+            }
         }
         return false;
     }

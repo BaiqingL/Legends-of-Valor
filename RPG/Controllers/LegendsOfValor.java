@@ -138,6 +138,8 @@ public class LegendsOfValor implements Game {
                 gameMap.moveMonsters();
                 if (gameMap.checkMonsterReachedEnd()) {
                     printer.clearScreen();
+                    // Render map to show monsters that reached the end
+                    gameMap.renderMap();
                     printer.printRed("You've been defeated!\n");
                     System.exit(0);
                 }
