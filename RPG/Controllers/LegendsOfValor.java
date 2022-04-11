@@ -21,13 +21,14 @@ public class LegendsOfValor implements Game {
 
     private void printGameDetails() {
         printer.printYellow("\nControls:\n");
-        printer.printYellow("w: move up\n");
-        printer.printYellow("s: move down\n");
-        printer.printYellow("a: move left\n");
-        printer.printYellow("d: move right\n");
-        printer.printYellow("i: show info\n");
+        printer.printYellow("w: Move up\n");
+        printer.printYellow("s: Move down\n");
+        printer.printYellow("a: Move left\n");
+        printer.printYellow("d: Move right\n");
+        printer.printYellow("i: Show info\n");
         printer.printYellow("b: Back to Nexus\n");
-        printer.printYellow("q: quit\n");
+        printer.printYellow("t: Teleport/Swap with another hero\n");
+        printer.printYellow("q: Quit\n");
     }
 
     @Override
@@ -110,6 +111,12 @@ public class LegendsOfValor implements Game {
                             heroMoved[heroIdx] = true;
                             heroIdx++;
                         }
+                        case "t" -> {
+                            int targetHeroIdx = getTeleportTarget(heroIdx);
+                            gameMap.teleport(heroIdx, targetHeroIdx);
+                            heroMoved[heroIdx] = true;
+                            heroIdx++;
+                        }
                         case "q" -> {
                             return;
                         }
@@ -130,6 +137,33 @@ public class LegendsOfValor implements Game {
             }
         }
         return false;
+    }
+
+    private int getTeleportTarget(int sourceHeroIdx) {
+        printer.clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        int targetHeroIdx = -1;
+        while (targetHeroIdx == -1) {
+            printer.printYellow("Currently choosing target for Hero " + (sourceHeroIdx + 1) + ": " + party.getHeros().get(sourceHeroIdx).getName() + "\n");
+            printer.printYellow("Choose a hero to teleport to: \n");
+            for (int i = 0; i < party.getHeros().size(); i++) {
+                if (i != sourceHeroIdx) {
+                    printer.printGreen(i + 1 + ": " + party.getHeros().get(i).getName() + "\n");
+                }
+            }
+            try {
+                targetHeroIdx = Integer.parseInt(scanner.nextLine());
+                if (targetHeroIdx < 0 || targetHeroIdx > party.getHeros().size() || targetHeroIdx == sourceHeroIdx) {
+                    // Reset to keep looping
+                    targetHeroIdx = -1;
+                    throw new Exception("Invalid target");
+                }
+            } catch (Exception e) {
+                printer.printRed("Improper input\n");
+            }
+        }
+        // Offset by 1 to account for array indexing
+        return targetHeroIdx - 1;
     }
 
     // Prints the game details
@@ -165,6 +199,7 @@ public class LegendsOfValor implements Game {
                     choice.equals("s") ||
                     choice.equals("d") ||
                     choice.equals("b") ||
+                    choice.equals("t") ||
                     choice.equals("q") ||
                     choice.equals("i")) {
                 return choice;

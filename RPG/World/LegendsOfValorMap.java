@@ -213,4 +213,19 @@ public class LegendsOfValorMap extends Randomness implements Map {
         playerPosition[heroIdx] = new LocationTuple(x, y);
         gameContent[x][y] = heroTile;
     }
+
+    public void teleport(int heroIdx, int targetHeroIdx) {
+        Tile sourceHeroTile = gameContent[playerPosition[heroIdx].getX()][playerPosition[heroIdx].getY()];
+        Tile targetHeroTile = gameContent[playerPosition[targetHeroIdx].getX()][playerPosition[targetHeroIdx].getY()];
+        gameContent[playerPosition[heroIdx].getX()][playerPosition[heroIdx].getY()] = targetHeroTile;
+        gameContent[playerPosition[targetHeroIdx].getX()][playerPosition[targetHeroIdx].getY()] = sourceHeroTile;
+
+        int sourceX = playerPosition[heroIdx].getX();
+        int sourceY = playerPosition[heroIdx].getY();
+        int targetX = playerPosition[targetHeroIdx].getX();
+        int targetY = playerPosition[targetHeroIdx].getY();
+
+        playerPosition[heroIdx] = new LocationTuple(targetX, targetY);
+        playerPosition[targetHeroIdx] = new LocationTuple(sourceX, sourceY);
+    }
 }
