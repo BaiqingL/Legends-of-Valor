@@ -272,6 +272,8 @@ public class LegendsOfValorMap extends Randomness implements Map {
                 gameContent[x-1][y] = new Tile("wild");
                 enemyPosition.set(i, newMonsterLocation);
                 gameContent[x][y] = monsterTile;
+            }else{
+
             }
 
         }
@@ -298,11 +300,10 @@ public class LegendsOfValorMap extends Randomness implements Map {
     public List<Integer> enemyInRange(int heroIdx){
         List<Integer> monstersInRange = new ArrayList<Integer>();
         int monsterIdx = 0;
-        int x = playerPosition[heroIdx].getX();
-        int y = playerPosition[heroIdx].getY();
-        LocationTuple loc = new LocationTuple(x-1,y);
+        LocationTuple playerLocation = playerPosition[heroIdx];
+
         for (LocationTuple monsterLocation : this.enemyPosition) {
-            if(loc.equals(monsterLocation)){
+            if(playerLocation.isAdjacent(monsterLocation)){
                 monstersInRange.add(monsterIdx);
             }
             monsterIdx++;
@@ -311,6 +312,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return monstersInRange;
 
     }
+
 
     public void removeMonster(int monsterIdx){
         int x = enemyPosition.get(monsterIdx).getX();
