@@ -16,4 +16,8 @@ public class LocationTuple {
     public int getY() {
         return y;
     }
+
+    public boolean equals(LocationTuple other) {
+        return this.getX() == other.getX() && this.getY() == other.getY();
+    }
 }
