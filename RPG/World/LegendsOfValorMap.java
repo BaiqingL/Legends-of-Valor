@@ -21,6 +21,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
     private static final Tile[][] gameContent = new Tile[8][8];
     private final CellType[][] map = new CellType[8][8];
     private final LocationTuple[] playerPosition = new LocationTuple[HERO_COUNT];
+    private final List<LocationTuple> enemyPosition = new ArrayList<>();
 
     public LegendsOfValorMap() {
         // Create the content map
@@ -29,6 +30,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
             for (int j = 0; j < gameContent[i].length; j++) {
                 if (i == 0 && (j - 1) % 3 == 0) {
                     gameContent[i][j] = new Tile("enemy");
+                    enemyPosition.add(new LocationTuple(i, j));
                 } else if (i == gameContent.length - 1 && (j - 1) % 3 == 0) {
                     gameContent[i][j] = new Tile("H" + heroIdx);
                     playerPosition[heroIdx - 1] = new LocationTuple(i, j);
@@ -97,7 +99,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         printableMap.get(row).append(getInnerCellStr(component));
     }
 
-    private static void createOutterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
+    private static void createOuterCell(CellType[][] map, List<StringBuilder> printableMap, int row, int col) {
         switch (map[row / 3][col]) {
             case NEXUS -> printableMap.get(row).append(getOuterCellStr('N'));
             case PLAIN -> printableMap.get(row).append(getOuterCellStr('P'));
@@ -118,7 +120,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
             if ((row / 3) % 2 == 0) {
                 for (int col = 0; col < size; col++) {
                     if (row % 2 == 0) {
-                        createOutterCell(map, printableMap, row, col);
+                        createOuterCell(map, printableMap, row, col);
                     } else {
                         createInnerCell(map, printableMap, row, col);
                     }
@@ -129,7 +131,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
             } else {
                 for (int col = 0; col < size; col++) {
                     if (row % 2 == 1) {
-                        createOutterCell(map, printableMap, row, col);
+                        createOuterCell(map, printableMap, row, col);
                     } else {
                         createInnerCell(map, printableMap, row, col);
                     }
