@@ -1,10 +1,13 @@
 package RPG.Monsters;
 
+import RPG.Controllers.Attack;
 import RPG.Controllers.FancyPrint;
+import RPG.Players.Hero;
+import RPG.World.GameCharacter;
 import RPG.World.Randomness;
 
 // Monster class and extend randomness for damage generation
-public abstract class Monster extends Randomness {
+public abstract class Monster extends GameCharacter implements Attack {
     private final String name;
     private final FancyPrint printer = new FancyPrint();
     private final int level;
@@ -74,9 +77,23 @@ public abstract class Monster extends Randomness {
     }
 
     public boolean hitLands() {
-        return getRandomNumber(0, 100) > dodgeChance;
+        return Randomness.getRandomNumber(0, 100) > dodgeChance;
     }
 
+    @Override
+    public int attack(GameCharacter character) {
+        int damagePurposed = (int) (this.damage * 0.05);
+        Hero hero = (Hero) character;
+        damagePurposed -= hero.getDamageReduction();
+        if (damagePurposed < 0) damagePurposed = 0;
+
+        if(hero.hitLands()){
+            hero.setHp(hero.getHp() - damagePurposed);
+            return damagePurposed;
+        } else{
+            return -1;
+        }
+    }
 
 
     // Prints the monster's stats

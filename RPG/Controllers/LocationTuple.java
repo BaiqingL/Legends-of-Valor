@@ -20,7 +20,8 @@ public class LocationTuple {
     public boolean isAdjacent(LocationTuple otherLocation){
 
 
-        if (otherLocation.equals(new LocationTuple(this.x-1, this.y)) ||
+        if (otherLocation.equals(this) ||
+                otherLocation.equals(new LocationTuple(this.x-1, this.y)) ||
                 otherLocation.equals(new LocationTuple(this.x-1, this.y-1)) ||
                 otherLocation.equals(new LocationTuple(this.x-1, this.y+1)) ||
                 otherLocation.equals(new LocationTuple(this.x+1, this.y)) ||

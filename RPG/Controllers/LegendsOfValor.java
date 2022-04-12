@@ -117,9 +117,7 @@ public class LegendsOfValor implements Game {
                             List<Integer> monstersInRange = gameMap.enemyInRange(heroIdx);
                             if (monstersInRange.size() > 0) {
                                 int monsterIdx = getAttackTarget(monstersInRange);
-                                Monster monsterToAttack = this.monsters.get(monsterIdx);
-                                int damage = party.getHeros().get(heroIdx).attack(monsterToAttack);
-                                enemyAttacked(damage, monsterIdx);
+                                enemyAttacked(heroIdx, monsterIdx);
                                 heroMoved[heroIdx] = true;
                                 heroIdx++;
                             } else {
@@ -157,7 +155,16 @@ public class LegendsOfValor implements Game {
                 }
 
                 // Heros finished, now move monsters
-                gameMap.moveMonsters();
+
+                printer.printYellow("\nENEMY TURN:\n");
+                for(int monsterIdx = 0; monsterIdx < this.monsters.size(); monsterIdx++){
+                    int heroToAttack = gameMap.playerInRange(monsterIdx);
+                    if(heroToAttack != -1){
+                        playerAttacked(monsterIdx,heroToAttack);
+                    } else {
+                        gameMap.moveMonster(monsterIdx);
+                    }
+                }
                 if (gameMap.checkMonsterReachedEnd()) {
                     printer.clearScreen();
                     // Render map to show monsters that reached the end
@@ -237,20 +244,52 @@ public class LegendsOfValor implements Game {
         return targetHeroIdx - 1;
     }
 
-    private void enemyAttacked(int damageDone, int monsterIdx){
-        Monster monster = monsters.get(monsterIdx);
+    private void enemyAttacked(int heroIdx, int monsterIdx){
+        Monster monster = this.monsters.get(monsterIdx);
+        Hero hero = party.getHeros().get(heroIdx);
+        int damageDone = hero.attack(monster);
+
         if(damageDone == -1){
             printer.printRed(monster.getName()+" Dodged!\n");
         } else if(monster.getHp() > 0){
             printer.clearScreen();
-            printer.printRed(monster.getName() + " took " + damageDone + " damage!\n");
+            printer.printGreen(monster.getName() + " took " + damageDone + " damage!\n");
             printer.printYellow("They now have " + monster.getHp() + " health.\n");
         }else{
             printer.printGreen(monster.getName() + " was killed!");
             this.gameMap.removeMonster(monsterIdx);
+            this.monsters.remove(monster);
         }
 
         printer.printYellow("Press Enter to continue...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+
+
+
+    }
+
+    private void playerAttacked(int monsterIdx, int heroIdx){
+        Monster monster = this.monsters.get(monsterIdx);
+        Hero hero = party.getHeros().get(heroIdx);
+        int damageDone = monster.attack(hero);
+
+        printer.printYellow(monster.getName()+" Attacked " +hero.getName()+":\n");
+
+        if(damageDone == -1){
+            printer.printRed(hero.getName()+" Dodged!\n");
+        } else if(hero.getHp() > 0){
+            printer.clearScreen();
+            printer.printRed(hero.getName() + " took " + damageDone + " damage.\n");
+            printer.printYellow("They now have " + hero.getHp() + " health.\n");
+        }else{
+            printer.printRed(hero.getName() + " was killed.");
+            this.gameMap.removeHero(heroIdx);
+            this.party.getHeros().remove(hero);
+
+        }
+
+        printer.printYellow("Press Enter to continue...\n");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
 

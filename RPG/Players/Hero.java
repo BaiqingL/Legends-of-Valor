@@ -1,10 +1,12 @@
 package RPG.Players;
 
+import RPG.Controllers.Attack;
 import RPG.Monsters.Monster;
-import RPG.World.LegendsOfValorMap;
+import RPG.World.GameCharacter;
+import RPG.World.Randomness;
 
 // Abstract class Hero that is extended by the playable classes
-public abstract class Hero implements Attack, Teleportable{
+public abstract class Hero extends GameCharacter implements Attack {
     private final Inventory inventory = new Inventory();
     private final String name;
     private int level = 1;
@@ -121,9 +123,27 @@ public abstract class Hero implements Attack, Teleportable{
         return inventory;
     }
 
+    public int getDamageReduction(){
+        int armorDamageReduction = 0;
+        if (this.inventory.getArmors().size() > 0) {
+            armorDamageReduction = this.inventory.getArmors().get(0).getDamageReduction();
+        }
+
+        return armorDamageReduction;
+    }
+
+    public boolean hitLands(){
+        double chance = (double) this.agility * 0.002;
+        if ((double) Randomness.getRandomNumber(0, 100) < chance) {
+            return false;
+        }
+
+        return true;
+    }
     @Override
-    public int attack(Monster monster) {
+    public int attack(GameCharacter character) {
         int damagePurposed = (int) (this.strength * 0.05);
+        Monster monster = (Monster) character;
 
         if(monster.hitLands()){
             monster.decreaseHp(damagePurposed);
@@ -131,11 +151,6 @@ public abstract class Hero implements Attack, Teleportable{
         } else{
             return -1;
         }
-    }
-
-    @Override
-    public void teleport() {
-
     }
 
     public String toString() {

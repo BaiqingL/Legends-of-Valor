@@ -64,4 +64,14 @@ public class Party {
         this.money += money;
     }
 
+    public boolean allHerosDead(){
+        for (Hero hero : this.heros) {
+            if (hero.getHp() > 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
