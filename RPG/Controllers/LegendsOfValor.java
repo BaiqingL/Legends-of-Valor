@@ -71,6 +71,11 @@ public class LegendsOfValor implements Game {
                 }
                 // Makes sure that each hero has taken their turn
                 while (heroRemainsUnmoved(heroMoved)) {
+                    if(this.party.getHeros().get(heroIdx).getHp() < 0){
+                        heroMoved[heroIdx] = true;
+                        heroIdx++;
+                        continue;
+                    }
                     gameMap.renderMap();
                     printGameDetails();
                     if (improperMove) {
@@ -165,7 +170,7 @@ public class LegendsOfValor implements Game {
                         gameMap.moveMonster(monsterIdx);
                     }
                 }
-                if (gameMap.checkMonsterReachedEnd()) {
+                if (gameMap.checkMonsterReachedEnd() || this.party.allHerosDead()) {
                     printer.clearScreen();
                     // Render map to show monsters that reached the end
                     gameMap.renderMap();
@@ -256,12 +261,12 @@ public class LegendsOfValor implements Game {
             printer.printGreen(monster.getName() + " took " + damageDone + " damage!\n");
             printer.printYellow("They now have " + monster.getHp() + " health.\n");
         }else{
-            printer.printGreen(monster.getName() + " was killed!");
+            printer.printGreen(monster.getName() + " was killed!\n");
             this.gameMap.removeMonster(monsterIdx);
             this.monsters.remove(monster);
         }
 
-        printer.printYellow("Press Enter to continue...");
+        printer.printYellow("Press Enter to continue...\n");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
 
@@ -283,10 +288,8 @@ public class LegendsOfValor implements Game {
             printer.printRed(hero.getName() + " took " + damageDone + " damage.\n");
             printer.printYellow("They now have " + hero.getHp() + " health.\n");
         }else{
-            printer.printRed(hero.getName() + " was killed.");
+            printer.printRed(hero.getName() + " was killed.\n");
             this.gameMap.removeHero(heroIdx);
-            this.party.getHeros().remove(hero);
-
         }
 
         printer.printYellow("Press Enter to continue...\n");
