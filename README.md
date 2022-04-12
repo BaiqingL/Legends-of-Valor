@@ -93,4 +93,4 @@ U03215838
 ---------------------------------------------------------------------------
 1. Navigate to the main Project Directory after downloading the files
 2. Run the following instructions on command line:
-	javac RPG/*.java && java Main
+	javac RPG/*.java && java RPG.Main
