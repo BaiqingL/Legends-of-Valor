@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class LegendsOfValor implements Game {
     private static final FancyPrint printer = new FancyPrint();
+    private static final int NEW_MONSTER_SPAWN_TURN = 8;
     private final LegendsOfValorMap gameMap;
     private final MonsterBuilder monsterBuilder = new MonsterBuilder();
     private final List<Monster> monsters;
@@ -26,7 +27,7 @@ public class LegendsOfValor implements Game {
 
     public LegendsOfValor() {
         gameMap = new LegendsOfValorMap();
-        monsters = monsterBuilder.buildMonsters(LegendsOfValorMap.getEnemyCount());
+        monsters = monsterBuilder.buildMonsters(gameMap.getEnemyCount());
     }
 
     private void printGameDetails() {
@@ -195,6 +196,11 @@ public class LegendsOfValor implements Game {
                 }
                 // Increment turn
                 turn++;
+
+                if (turn % NEW_MONSTER_SPAWN_TURN == 0) {
+                    spawnMonsters();
+                    printer.printRed("New monsters have spawned!\n");
+                }
             }
         }
     }
@@ -207,6 +213,11 @@ public class LegendsOfValor implements Game {
             }
         }
         return false;
+    }
+
+    private void spawnMonsters() {
+        monsters.addAll(monsterBuilder.buildMonsters(3));
+        gameMap.addMonsters();
     }
 
     private int getAttackTarget(List<Integer> targets) {

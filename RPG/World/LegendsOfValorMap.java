@@ -18,12 +18,11 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     // Private fields
     private static final int HERO_COUNT = 3;
-    private static final int ENEMY_COUNT = 3;
     private static final Tile[][] gameContent = new Tile[8][8];
     private final CellType[][] map = new CellType[8][8];
     private final List<LocationTuple> playerPosition = new ArrayList<>();
     private final List<LocationTuple> enemyPosition = new ArrayList<>();
-
+    private int ENEMY_COUNT = 3;
 
     public LegendsOfValorMap() {
         // Create the content map
@@ -118,12 +117,24 @@ public class LegendsOfValorMap extends Randomness implements Map {
         }
     }
 
-    public static int getEnemyCount() {
+    public int getEnemyCount() {
         return ENEMY_COUNT;
     }
 
     public static int getHeroCount() {
         return HERO_COUNT;
+    }
+
+    public void addMonsters() {
+        ENEMY_COUNT += 3;
+        for (int i = 0; i < gameContent.length; i++) {
+            for (int j = 0; j < gameContent[i].length; j++) {
+                if (i == 0 && (j - 1) % 3 == 0) {
+                    gameContent[i][j] = new Tile("enemy");
+                    enemyPosition.add(new LocationTuple(i, j));
+                }
+            }
+        }
     }
 
     @Override
