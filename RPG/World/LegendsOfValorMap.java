@@ -328,10 +328,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
             gameContent[x - 1][y] = new Tile("wild");
             enemyPosition.set(monsterIdx, newMonsterLocation);
             gameContent[x][y] = monsterTile;
-        } else {
-
         }
-
 
     }
 
