@@ -66,7 +66,7 @@ public class LegendsOfValor implements Game {
             this.heroIdx = 0;
             party = new Party(heros);
             boolean improperMove = false;
-            boolean printInfo = false;
+            int turn = 1;
             while (true) {
                 printer.clearScreen();
 
@@ -88,6 +88,7 @@ public class LegendsOfValor implements Game {
                         printer.printRed("Improper move\n");
                         improperMove = false;
                     }
+                    printer.printGreen("\nTurn " + turn + "\n");
                     printer.printYellow("Currently choosing action for Hero " + (this.heroIdx + 1) + ": " + party.getHeros().get(this.heroIdx).getName() + "\n");
                     String choice = getPlayerInput();
 
@@ -196,8 +197,8 @@ public class LegendsOfValor implements Game {
                     printer.printRed("You've been defeated!\n");
                     System.exit(0);
                 }
-
-
+                // Increment turn
+                turn++;
             }
         }
     }
