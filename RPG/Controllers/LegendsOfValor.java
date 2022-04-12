@@ -1,5 +1,6 @@
 package RPG.Controllers;
 
+import RPG.Items.Potion;
 import RPG.Monsters.Monster;
 import RPG.Monsters.MonsterBuilder;
 import RPG.Players.Hero;
@@ -31,6 +32,7 @@ public class LegendsOfValor implements Game {
         printer.printYellow("a: move left\n");
         printer.printYellow("d: move right\n");
         printer.printYellow("r: Attack\n");
+        printer.printYellow("p: drink potion\n");
         printer.printYellow("i: show info\n");
         printer.printYellow("b: Back to Nexus\n");
         printer.printYellow("t: Teleport/Swap with another hero\n");
@@ -130,6 +132,12 @@ public class LegendsOfValor implements Game {
                             }
 
 
+                        }
+                        case "p" -> {
+                            Potion potionToDrink = getPotion(heroIdx);
+                            drinkPotion(party.getHeros().get(heroIdx), potionToDrink);
+                            heroMoved[heroIdx] = true;
+                            heroIdx++;
                         }
                         case "b" -> {
                             gameMap.backToNexus(heroIdx);
@@ -249,6 +257,44 @@ public class LegendsOfValor implements Game {
         return targetHeroIdx - 1;
     }
 
+
+    private Potion getPotion(int heroIdx){
+        printer.clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        Hero hero = this.party.getHeros().get(heroIdx);
+        List<Potion> potions = hero.getInventory().getPotions();
+        int potionIdx;
+
+        if (potions.size() < 1){
+            printer.printRed("No Potions in Inventory\n");
+            printer.printYellow("Press Enter to continue...\n");
+            scanner.nextLine();
+            return null;
+
+        }
+
+        while(true) {
+            printer.printYellow("Choose a Potion to Drink:");
+            potionIdx = 1;
+
+            for (Potion potion : potions) {
+                printer.printYellow((potionIdx) + ". " + potion.getName());
+                potionIdx++;
+            }
+            try {
+                potionIdx = Integer.parseInt(scanner.nextLine());
+                if (potionIdx <= 0 || potionIdx > potions.size()){
+                    throw new Exception("Invalid Target");
+                }
+                return potions.get(potionIdx-1);
+            } catch (Exception e) {
+                printer.printRed("Improper input\n");
+            }
+        }
+
+
+    }
+
     private void enemyAttacked(int heroIdx, int monsterIdx){
         Monster monster = this.monsters.get(monsterIdx);
         Hero hero = party.getHeros().get(heroIdx);
@@ -296,9 +342,19 @@ public class LegendsOfValor implements Game {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
 
-
-
     }
+
+    public void drinkPotion(Hero hero, Potion potion){
+        if(potion != null) {
+            potion.consume(hero);
+            printer.printGreen(potion.getName() + " increased to following stats for " + hero.getName() + " by " + potion.getIncreaseAmount() + ":\n"
+                    + potion.getStatToIncrease().replace(' ', '\n') + "\n");
+            printer.printYellow("Press Enter to continue...\n");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
+        }
+    }
+
 
 
     // Prints the game details
@@ -334,6 +390,7 @@ public class LegendsOfValor implements Game {
                     choice.equals("s") ||
                     choice.equals("d") ||
                     choice.equals("r") ||
+                    choice.equals("p") ||
                     choice.equals("b") ||
                     choice.equals("t") ||
                     choice.equals("q") ||
