@@ -171,7 +171,7 @@ public class LegendsOfValor implements Game {
             }
             try {
                 targetHeroIdx = Integer.parseInt(scanner.nextLine());
-                if (targetHeroIdx < 0 || targetHeroIdx > party.getHeros().size() || targetHeroIdx == sourceHeroIdx) {
+                if (targetHeroIdx < 0 || targetHeroIdx > party.getHeros().size() || targetHeroIdx == sourceHeroIdx + 1) {
                     // Reset to keep looping
                     targetHeroIdx = -1;
                     throw new Exception("Invalid target");
