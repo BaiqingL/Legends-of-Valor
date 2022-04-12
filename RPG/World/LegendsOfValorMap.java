@@ -5,17 +5,16 @@ import RPG.Controllers.LocationTuple;
 import java.util.ArrayList;
 import java.util.List;
 
-enum CellType {
-    NEXUS,
-    PLAIN,
-    KOULOU,
-    CAVE,
-    BUSH,
-    INACCESSIBLE
-}
 
 public class LegendsOfValorMap extends Randomness implements Map {
-
+    public enum CellType {
+        NEXUS,
+        PLAIN,
+        KOULOU,
+        CAVE,
+        BUSH,
+        INACCESSIBLE
+    }
     // Private fields
     private static final int HERO_COUNT = 3;
     private static final Tile[][] gameContent = new Tile[8][8];
@@ -369,6 +368,12 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return this.map[x][y] == CellType.NEXUS;
     }
 
+    public CellType getHeroCell(int heroIdx){
+        int x = this.playerPosition.get(heroIdx).getX();
+        int y = this.playerPosition.get(heroIdx).getY();
+        return this.map[x][y];
+    }
+
     // Check if enemy is in range of an attack
     public List<Integer> enemyInRange(int heroIdx) {
         List<Integer> monstersInRange = new ArrayList<Integer>();
@@ -405,4 +410,6 @@ public class LegendsOfValorMap extends Randomness implements Map {
         enemyPosition.remove(monsterIdx);
 
     }
+
+
 }

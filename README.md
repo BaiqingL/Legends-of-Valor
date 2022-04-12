@@ -1,10 +1,17 @@
 # CS611 Legends of Valor
 
 ## Baiqing Lyu
+## Noah Jean-Baptiste
 ---------------------------------------------------------------------------
 baiqing@bu.edu
 
 U03215838
+
+##
+
+noahjb@bu.edu
+
+U20008929
 
 
 ## Files

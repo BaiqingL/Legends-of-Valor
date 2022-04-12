@@ -21,6 +21,7 @@ public class LegendsOfValor implements Game {
     private final MonsterBuilder monsterBuilder = new MonsterBuilder();
     private final List<Monster> monsters;
     int heroIdx;
+    Hero currentHero;
     private Party party;
     // The market object
     private Market market;
@@ -78,9 +79,10 @@ public class LegendsOfValor implements Game {
                 }
                 // Makes sure that each hero has taken their turn
                 while (heroRemainsUnmoved(heroMoved)) {
-
                     gameMap.renderMap();
                     printGameDetails();
+                    this.currentHero =  party.getHeros().get(heroIdx);
+
                     if (improperMove) {
                         printer.printRed("Improper move\n");
                         improperMove = false;
@@ -94,6 +96,7 @@ public class LegendsOfValor implements Game {
                             if (!gameMap.moveUp(this.heroIdx)) {
                                 improperMove = true;
                             } else {
+                                setBuff(this.heroIdx);
                                 heroMoved[this.heroIdx] = true;
                                 this.heroIdx++;
                             }
@@ -102,6 +105,7 @@ public class LegendsOfValor implements Game {
                             if (!gameMap.moveDown(this.heroIdx)) {
                                 improperMove = true;
                             } else {
+                                setBuff(this.heroIdx);
                                 heroMoved[this.heroIdx] = true;
                                 this.heroIdx++;
                             }
@@ -110,6 +114,7 @@ public class LegendsOfValor implements Game {
                             if (!gameMap.moveLeft(this.heroIdx)) {
                                 improperMove = true;
                             } else {
+                                setBuff(this.heroIdx);
                                 heroMoved[this.heroIdx] = true;
                                 this.heroIdx++;
                             }
@@ -118,6 +123,7 @@ public class LegendsOfValor implements Game {
                             if (!gameMap.moveRight(this.heroIdx)) {
                                 improperMove = true;
                             } else {
+                                setBuff(this.heroIdx);
                                 heroMoved[this.heroIdx] = true;
                                 this.heroIdx++;
                             }
@@ -137,7 +143,7 @@ public class LegendsOfValor implements Game {
                         }
                         case "p" -> {
                             Potion potionToDrink = getPotion();
-                            drinkPotion(party.getHeros().get(this.heroIdx), potionToDrink);
+                            drinkPotion(potionToDrink);
                             heroMoved[this.heroIdx] = true;
                             this.heroIdx++;
                         }
@@ -147,6 +153,7 @@ public class LegendsOfValor implements Game {
                                 market.listOptions();
                             } else {
                                 gameMap.backToNexus(this.heroIdx);
+                                setBuff(this.heroIdx);
                                 heroMoved[this.heroIdx] = true;
                                 this.heroIdx++;
                             }
@@ -154,6 +161,8 @@ public class LegendsOfValor implements Game {
                         case "t" -> {
                             int targetHeroIdx = getTeleportTarget();
                             gameMap.teleport(this.heroIdx, targetHeroIdx);
+                            setBuff(this.heroIdx);
+                            setBuff(targetHeroIdx);
                             heroMoved[this.heroIdx] = true;
                             this.heroIdx++;
                         }
@@ -279,8 +288,7 @@ public class LegendsOfValor implements Game {
     private Potion getPotion() {
         printer.clearScreen();
         Scanner scanner = new Scanner(System.in);
-        Hero hero = this.party.getHeros().get(this.heroIdx);
-        List<Potion> potions = hero.getInventory().getPotions();
+        List<Potion> potions = this.currentHero.getInventory().getPotions();
         int potionIdx;
 
         if (potions.size() < 1) {
@@ -363,16 +371,56 @@ public class LegendsOfValor implements Game {
 
     }
 
-    public void drinkPotion(Hero hero, Potion potion) {
+    public void drinkPotion(Potion potion) {
         if (potion != null) {
-            potion.consume(hero);
-            printer.printGreen(potion.getName() + " increased to following stats for " + hero.getName() + " by " + potion.getIncreaseAmount() + ":\n"
+            potion.consume(this.currentHero);
+            printer.printGreen(potion.getName() + " increased to following stats for " + this.currentHero.getName() + " by " + potion.getIncreaseAmount() + ":\n"
                     + potion.getStatToIncrease().replace(' ', '\n') + "\n");
             printer.printYellow("Press Enter to continue...\n");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
         }
     }
+
+    public void setBuff(int targetIdx){
+        LegendsOfValorMap.CellType cell = this.gameMap.getHeroCell(targetIdx);
+        Hero hero = this.party.getHeros().get(targetIdx);
+
+        switch (cell){
+            case BUSH -> {
+                this.currentHero.setDexterity( (int)(this.currentHero.getDexterity() * 1.1) );
+            }
+            case CAVE -> {
+                this.currentHero.setAgility( (int)(this.currentHero.getAgility() * 1.1) );
+            }
+            case KOULOU -> {
+                this.currentHero.setStrength( (int)(this.currentHero.getStrength() * 1.1) );
+            }
+            default -> {
+
+            }
+        }
+
+        if (hero.getPreviousCell() != null) {
+            switch (this.currentHero.getPreviousCell()) {
+                case BUSH -> {
+                    this.currentHero.setDexterity((int) (this.currentHero.getDexterity() / 1.1));
+                }
+                case CAVE -> {
+                    this.currentHero.setAgility((int) (this.currentHero.getAgility() / 1.1));
+                }
+                case KOULOU -> {
+                    this.currentHero.setStrength((int) (this.currentHero.getStrength() / 1.1));
+                }
+                default -> {
+
+                }
+            }
+        }
+
+        this.currentHero.setPreviousCell(cell);
+    }
+
 
 
     // Prints the game details

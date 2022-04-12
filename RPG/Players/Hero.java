@@ -3,6 +3,7 @@ package RPG.Players;
 import RPG.Controllers.Attack;
 import RPG.Monsters.Monster;
 import RPG.World.GameCharacter;
+import RPG.World.LegendsOfValorMap;
 import RPG.World.Randomness;
 
 // Abstract class Hero that is extended by the playable classes
@@ -17,6 +18,7 @@ public abstract class Hero extends GameCharacter implements Attack {
     private int agility;
     private int money;
     private int exp;
+    private LegendsOfValorMap.CellType previousCell;
 
     public Hero(String name, int mana, int strength, int dexterity, int agility, int money, int exp) {
         this.name = name;
@@ -90,6 +92,14 @@ public abstract class Hero extends GameCharacter implements Attack {
 
     public int getLevel() {
         return level;
+    }
+
+    public LegendsOfValorMap.CellType getPreviousCell() {
+        return previousCell;
+    }
+
+    public void setPreviousCell(LegendsOfValorMap.CellType previousCell) {
+        this.previousCell = previousCell;
     }
 
     public void increaseStrength(int amount) {
