@@ -177,7 +177,7 @@ public class MonstersAndHerosMap extends Randomness implements Map {
 
     public void checkMarket() {
         if (heroStep.getContent().equals("M")) {
-            market.listOptions();
+            market.listHeros();
         }
     }
 

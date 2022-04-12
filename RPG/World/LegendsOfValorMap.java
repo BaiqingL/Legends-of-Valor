@@ -24,6 +24,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
     private final List<LocationTuple> playerPosition = new ArrayList<>();
     private final List<LocationTuple> enemyPosition = new ArrayList<>();
 
+
     public LegendsOfValorMap() {
         // Create the content map
         int heroIdx = 1;
@@ -295,6 +296,16 @@ public class LegendsOfValorMap extends Randomness implements Map {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean atNexus(int heroIdx){
+        int x = playerPosition.get(heroIdx).getX();
+        int y = playerPosition.get(heroIdx).getY();
+        if(this.map[x][y] == CellType.NEXUS){
+            return true;
+        }
+
         return false;
     }
 

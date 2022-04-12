@@ -6,6 +6,7 @@ import RPG.Items.*;
 import RPG.Players.Party;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,16 +26,26 @@ public class Market {
         this.party = party;
     }
 
-    // Show the list of things that can be bought
-    public void listOptions() {
+    public Market(Hero hero) {
+        this.party = null;
+        this.hero = hero;
+    }
+
+    public void listHeros(){
         printer.clearScreen();
         Scanner scanner = new Scanner(System.in);
-
         boolean selected = false;
-        while (!selected){
+
+
+        if(this.party == null){
+            listOptions();
+            return;
+        }
+
+        while (!selected) {
             printer.printYellow("Choose a hero to buy for\n");
-            for (int i = 0; i< this.party.getHeros().size(); i++) {
-                printer.printYellow((i+1) +". "+ this.party.getHeros().get(i).getName()+"\n");
+            for (int i = 0; i < this.party.getHeros().size(); i++) {
+                printer.printYellow((i + 1) + ". " + this.party.getHeros().get(i).getName() + "\n");
             }
 
             try {
@@ -74,7 +85,13 @@ public class Market {
             }
         }
 
-        selected = false;
+        listOptions();
+    }
+    // Show the list of things that can be bought
+    public void listOptions() {
+        printer.clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        boolean selected = false;
 
         // Start the market loop
         while (!selected) {
