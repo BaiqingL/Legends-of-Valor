@@ -287,11 +287,11 @@ public class LegendsOfValor implements Game {
         }
 
         while(true) {
-            printer.printYellow("Choose a Potion to Drink:");
+            printer.printYellow("Choose a Potion to Drink:\n");
             potionIdx = 1;
 
             for (Potion potion : potions) {
-                printer.printYellow((potionIdx) + ". " + potion.getName());
+                printer.printYellow((potionIdx) + ". " + potion.getName()+"\n");
                 potionIdx++;
             }
             try {
