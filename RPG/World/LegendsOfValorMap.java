@@ -16,7 +16,7 @@ enum CellType {
 
 public class LegendsOfValorMap extends Randomness implements Map {
 
-    // Create 2d array of tiles that is 8 by 8
+    // Private fields
     private static final int HERO_COUNT = 3;
     private static final int ENEMY_COUNT = 3;
     private static final Tile[][] gameContent = new Tile[8][8];
@@ -252,6 +252,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         gameContent[x][y] = heroTile;
     }
 
+    // Teleport hero to another hero
     public void teleport(int heroIdx, int targetHeroIdx) {
         Tile sourceHeroTile = gameContent[playerPosition.get(heroIdx).getX()][playerPosition.get(heroIdx).getY()];
         Tile targetHeroTile = gameContent[playerPosition.get(targetHeroIdx).getX()][playerPosition.get(targetHeroIdx).getY()];
@@ -288,6 +289,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     }
 
+    // Check if the monster has reached Hero nexus
     public boolean checkMonsterReachedEnd() {
         for (int i = 0; i < enemyPosition.size(); i++) {
             if (enemyPosition.get(i).getX() == map.length - 1) {
@@ -297,6 +299,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return false;
     }
 
+    // Check if the hero has reached Monster nexus
     public boolean checkHeroReachedEnd() {
         for (int i = 0; i < playerPosition.size(); i++) {
             if (playerPosition.get(i).getX() == 0) {
@@ -312,6 +315,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return this.map[x][y] == CellType.NEXUS;
     }
 
+    // Check if enemy is in range of an attack
     public List<Integer> enemyInRange(int heroIdx) {
         List<Integer> monstersInRange = new ArrayList<Integer>();
         int monsterIdx = 0;
@@ -328,6 +332,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     }
 
+    // Check if hero is in range of an attack
     public int playerInRange(int monsterIdx) {
         for (int i = 0; i < this.playerPosition.size(); i++) {
             if (this.enemyPosition.get(monsterIdx).isAdjacent(this.playerPosition.get(i))) {
@@ -338,6 +343,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return -1;
     }
 
+    // Remove dead monsters
     public void removeMonster(int monsterIdx) {
         int x = enemyPosition.get(monsterIdx).getX();
         int y = enemyPosition.get(monsterIdx).getY();

@@ -31,13 +31,13 @@ public class LegendsOfValor implements Game {
 
     private void printGameDetails() {
         printer.printYellow("\nControls:\n");
-        printer.printYellow("w: move up\n");
-        printer.printYellow("s: move down\n");
-        printer.printYellow("a: move left\n");
-        printer.printYellow("d: move right\n");
+        printer.printYellow("w: Move up\n");
+        printer.printYellow("s: Move down\n");
+        printer.printYellow("a: Move left\n");
+        printer.printYellow("d: Move right\n");
         printer.printYellow("r: Attack\n");
-        printer.printYellow("p: drink potion\n");
-        printer.printYellow("i: show info\n");
+        printer.printYellow("p: Drink potion\n");
+        printer.printYellow("i: Show info\n");
         if (gameMap.atNexus(this.heroIdx)) {
             printer.printYellow("b: Enter Nexus Market\n");
         } else {
@@ -69,10 +69,6 @@ public class LegendsOfValor implements Game {
             boolean printInfo = false;
             while (true) {
                 printer.clearScreen();
-//                if (printInfo) {
-//                    printInfo();
-//                    printInfo = false;
-//                }
 
                 // Turn based movement, check which hero should move and have moved
                 boolean[] heroMoved = new boolean[heros.size()];
@@ -394,7 +390,8 @@ public class LegendsOfValor implements Game {
 
 
     // Get the player input and sanitize it
-    private String getPlayerInput() {
+    @Override
+    public String getPlayerInput() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printer.printYellow("Input: ");

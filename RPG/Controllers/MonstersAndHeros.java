@@ -115,7 +115,8 @@ public class MonstersAndHeros implements Game {
     }
 
     // Returns the player input and handles the case where the player enters a non-valid input
-    private String getPlayerInput() {
+    @Override
+    public String getPlayerInput() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printer.printYellow("Input: ");
