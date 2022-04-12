@@ -345,12 +345,4 @@ public class LegendsOfValorMap extends Randomness implements Map {
         enemyPosition.remove(monsterIdx);
 
     }
-
-    public void removeHero(int heroIdx) {
-        int x = playerPosition.get(heroIdx).getX();
-        int y = playerPosition.get(heroIdx).getY();
-        gameContent[x][y] = new Tile("wild");
-        playerPosition.remove(heroIdx);
-
-    }
 }

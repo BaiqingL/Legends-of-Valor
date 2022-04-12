@@ -191,6 +191,8 @@ public class LegendsOfValor implements Game {
                         gameMap.moveMonster(monsterIdx);
                     }
                 }
+                // Reset hero index
+                heroIdx = 0;
                 if (gameMap.checkMonsterReachedEnd() || this.party.allHerosDead()) {
                     printer.clearScreen();
                     // Render map to show monsters that reached the end
@@ -346,7 +348,9 @@ public class LegendsOfValor implements Game {
             printer.printYellow("They now have " + hero.getHp() + " health.\n");
         } else {
             printer.printRed(hero.getName() + " was killed.\n");
-            this.gameMap.removeHero(targetHeroIdx);
+            printer.printGreen(hero.getName() + "is spawned back at the Nexus.\n");
+            this.gameMap.backToNexus(targetHeroIdx);
+            this.party.healHero(targetHeroIdx);
         }
 
         printer.printYellow("Press Enter to continue...\n");

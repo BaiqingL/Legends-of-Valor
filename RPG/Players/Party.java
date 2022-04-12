@@ -1,21 +1,27 @@
 package RPG.Players;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Party class that contains all playable information and data
 public class Party {
     private final List<Hero> heros;
+    private final List<Integer> fullHealth = new ArrayList<>();
     private final int level = 1;
     private int money;
     private int exp = 0;
-    private int mana;
 
     public Party(List<Hero> heros) {
         this.heros = heros;
         for (Hero hero : heros) {
             money += hero.getMoney();
             exp += hero.getExp();
+            fullHealth.add(hero.getHp());
         }
+    }
+
+    public void healHero(int index) {
+        heros.get(index).setHp(fullHealth.get(index));
     }
 
     public List<Hero> getHeros() {
@@ -64,9 +70,9 @@ public class Party {
         this.money += money;
     }
 
-    public boolean allHerosDead(){
+    public boolean allHerosDead() {
         for (Hero hero : this.heros) {
-            if (hero.getHp() > 0){
+            if (hero.getHp() > 0) {
                 return false;
             }
         }
