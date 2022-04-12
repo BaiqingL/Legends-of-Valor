@@ -77,11 +77,7 @@ public class LegendsOfValor implements Game {
                 }
                 // Makes sure that each hero has taken their turn
                 while (heroRemainsUnmoved(heroMoved)) {
-                    if (this.party.getHeros().get(this.heroIdx).getHp() < 0) {
-                        heroMoved[this.heroIdx] = true;
-                        this.heroIdx++;
-                        continue;
-                    }
+
                     gameMap.renderMap();
                     printGameDetails();
                     if (improperMove) {
