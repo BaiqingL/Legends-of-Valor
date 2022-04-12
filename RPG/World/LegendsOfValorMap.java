@@ -112,6 +112,14 @@ public class LegendsOfValorMap extends Randomness implements Map {
         }
     }
 
+    public static int getEnemyCount() {
+        return ENEMY_COUNT;
+    }
+
+    public static int getHeroCount() {
+        return HERO_COUNT;
+    }
+
     @Override
     public void renderMap() {
 
@@ -259,7 +267,6 @@ public class LegendsOfValorMap extends Randomness implements Map {
         playerPosition.set(targetHeroIdx, new LocationTuple(sourceX, sourceY));
     }
 
-
     public void moveMonster(int monsterIdx) {
         LocationTuple newMonsterLocation;
 
@@ -270,11 +277,11 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
         newMonsterLocation = new LocationTuple(x, y);
 
-        if(checkMovable(newMonsterLocation)){
-            gameContent[x-1][y] = new Tile("wild");
+        if (checkMovable(newMonsterLocation)) {
+            gameContent[x - 1][y] = new Tile("wild");
             enemyPosition.set(monsterIdx, newMonsterLocation);
             gameContent[x][y] = monsterTile;
-        }else{
+        } else {
 
         }
 
@@ -299,23 +306,19 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return false;
     }
 
-    public boolean atNexus(int heroIdx){
+    public boolean atNexus(int heroIdx) {
         int x = playerPosition.get(heroIdx).getX();
         int y = playerPosition.get(heroIdx).getY();
-        if(this.map[x][y] == CellType.NEXUS){
-            return true;
-        }
-
-        return false;
+        return this.map[x][y] == CellType.NEXUS;
     }
 
-    public List<Integer> enemyInRange(int heroIdx){
+    public List<Integer> enemyInRange(int heroIdx) {
         List<Integer> monstersInRange = new ArrayList<Integer>();
         int monsterIdx = 0;
         LocationTuple playerLocation = playerPosition.get(heroIdx);
 
         for (LocationTuple monsterLocation : this.enemyPosition) {
-            if(playerLocation.isAdjacent(monsterLocation)){
+            if (playerLocation.isAdjacent(monsterLocation)) {
                 monstersInRange.add(monsterIdx);
             }
             monsterIdx++;
@@ -325,9 +328,9 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     }
 
-    public int playerInRange(int monsterIdx){
+    public int playerInRange(int monsterIdx) {
         for (int i = 0; i < this.playerPosition.size(); i++) {
-            if (this.enemyPosition.get(monsterIdx).isAdjacent(this.playerPosition.get(i))){
+            if (this.enemyPosition.get(monsterIdx).isAdjacent(this.playerPosition.get(i))) {
                 return i;
             }
         }
@@ -335,8 +338,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
         return -1;
     }
 
-
-    public void removeMonster(int monsterIdx){
+    public void removeMonster(int monsterIdx) {
         int x = enemyPosition.get(monsterIdx).getX();
         int y = enemyPosition.get(monsterIdx).getY();
         gameContent[x][y] = new Tile("wild");
@@ -344,19 +346,11 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     }
 
-    public void removeHero(int heroIdx){
+    public void removeHero(int heroIdx) {
         int x = playerPosition.get(heroIdx).getX();
         int y = playerPosition.get(heroIdx).getY();
         gameContent[x][y] = new Tile("wild");
         playerPosition.remove(heroIdx);
 
-    }
-
-    public static int getEnemyCount() {
-        return ENEMY_COUNT;
-    }
-
-    public static int getHeroCount() {
-        return HERO_COUNT;
     }
 }

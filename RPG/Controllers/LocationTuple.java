@@ -17,23 +17,18 @@ public class LocationTuple {
         return y;
     }
 
-    public boolean isAdjacent(LocationTuple otherLocation){
+    public boolean isAdjacent(LocationTuple otherLocation) {
 
 
-        if (otherLocation.equals(this) ||
-                otherLocation.equals(new LocationTuple(this.x-1, this.y)) ||
-                otherLocation.equals(new LocationTuple(this.x-1, this.y-1)) ||
-                otherLocation.equals(new LocationTuple(this.x-1, this.y+1)) ||
-                otherLocation.equals(new LocationTuple(this.x+1, this.y)) ||
-                otherLocation.equals(new LocationTuple(this.x+1, this.y-1)) ||
-                otherLocation.equals(new LocationTuple(this.x+1, this.y+1)) ||
-                otherLocation.equals(new LocationTuple(this.x, this.y-1)) ||
-                otherLocation.equals(new LocationTuple(this.x, this.y+1))){
-
-            return true;
-
-        }
-        return false;
+        return otherLocation.equals(this) ||
+                otherLocation.equals(new LocationTuple(this.x - 1, this.y)) ||
+                otherLocation.equals(new LocationTuple(this.x - 1, this.y - 1)) ||
+                otherLocation.equals(new LocationTuple(this.x - 1, this.y + 1)) ||
+                otherLocation.equals(new LocationTuple(this.x + 1, this.y)) ||
+                otherLocation.equals(new LocationTuple(this.x + 1, this.y - 1)) ||
+                otherLocation.equals(new LocationTuple(this.x + 1, this.y + 1)) ||
+                otherLocation.equals(new LocationTuple(this.x, this.y - 1)) ||
+                otherLocation.equals(new LocationTuple(this.x, this.y + 1));
     }
 
     public boolean equals(LocationTuple other) {
