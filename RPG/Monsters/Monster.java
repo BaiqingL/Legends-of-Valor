@@ -77,6 +77,8 @@ public abstract class Monster extends Randomness {
         return getRandomNumber(0, 100) > dodgeChance;
     }
 
+
+
     // Prints the monster's stats
     public void print() {
         printer.printYellow(this.name + " ");

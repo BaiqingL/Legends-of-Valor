@@ -18,6 +18,7 @@ public class LegendsOfValorMap extends Randomness implements Map {
 
     // Create 2d array of tiles that is 8 by 8
     private static final int HERO_COUNT = 3;
+    private static final int ENEMY_COUNT = 3;
     private static final Tile[][] gameContent = new Tile[8][8];
     private final CellType[][] map = new CellType[8][8];
     private final LocationTuple[] playerPosition = new LocationTuple[HERO_COUNT];
@@ -258,14 +259,23 @@ public class LegendsOfValorMap extends Randomness implements Map {
     }
 
     public void moveMonsters() {
+        LocationTuple newMonsterLocation;
         for (int i = 0; i < enemyPosition.size(); i++) {
             int x = enemyPosition.get(i).getX();
             int y = enemyPosition.get(i).getY();
             Tile monsterTile = gameContent[x][y];
-            gameContent[x][y] = new Tile("wild");
             x++;
-            enemyPosition.set(i, new LocationTuple(x, y));
-            gameContent[x][y] = monsterTile;
+
+            newMonsterLocation = new LocationTuple(x, y);
+
+            if(checkMovable(newMonsterLocation)){
+                gameContent[x-1][y] = new Tile("wild");
+                enemyPosition.set(i, newMonsterLocation);
+                gameContent[x][y] = monsterTile;
+            }else{
+
+            }
+
         }
     }
 
@@ -285,5 +295,38 @@ public class LegendsOfValorMap extends Randomness implements Map {
             }
         }
         return false;
+    }
+
+    public List<Integer> enemyInRange(int heroIdx){
+        List<Integer> monstersInRange = new ArrayList<Integer>();
+        int monsterIdx = 0;
+        LocationTuple playerLocation = playerPosition[heroIdx];
+
+        for (LocationTuple monsterLocation : this.enemyPosition) {
+            if(playerLocation.isAdjacent(monsterLocation)){
+                monstersInRange.add(monsterIdx);
+            }
+            monsterIdx++;
+        }
+
+        return monstersInRange;
+
+    }
+
+
+    public void removeMonster(int monsterIdx){
+        int x = enemyPosition.get(monsterIdx).getX();
+        int y = enemyPosition.get(monsterIdx).getY();
+        gameContent[x][y] = new Tile("wild");
+        enemyPosition.remove(monsterIdx);
+
+    }
+
+    public static int getEnemyCount() {
+        return ENEMY_COUNT;
+    }
+
+    public static int getHeroCount() {
+        return HERO_COUNT;
     }
 }

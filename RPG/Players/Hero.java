@@ -1,7 +1,10 @@
 package RPG.Players;
 
+import RPG.Monsters.Monster;
+import RPG.World.LegendsOfValorMap;
+
 // Abstract class Hero that is extended by the playable classes
-public abstract class Hero {
+public abstract class Hero implements Attack, Teleportable{
     private final Inventory inventory = new Inventory();
     private final String name;
     private int level = 1;
@@ -116,6 +119,23 @@ public abstract class Hero {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    @Override
+    public int attack(Monster monster) {
+        int damagePurposed = (int) (this.strength * 0.05);
+
+        if(monster.hitLands()){
+            monster.decreaseHp(damagePurposed);
+            return damagePurposed;
+        } else{
+            return -1;
+        }
+    }
+
+    @Override
+    public void teleport() {
+
     }
 
     public String toString() {
