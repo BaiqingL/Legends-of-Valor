@@ -1,6 +1,7 @@
 package RPG.Controllers;
 
 import RPG.Items.Potion;
+import RPG.Items.Spell;
 import RPG.Monsters.Monster;
 import RPG.Monsters.MonsterBuilder;
 import RPG.Players.Hero;
@@ -38,6 +39,7 @@ public class LegendsOfValor implements Game {
         printer.printYellow("a: Move left\n");
         printer.printYellow("d: Move right\n");
         printer.printYellow("r: Attack\n");
+        printer.printYellow("c: Cast spell\n");
         printer.printYellow("p: Drink potion\n");
         printer.printYellow("i: Show info\n");
         if (gameMap.atNexus(this.heroIdx)) {
@@ -138,14 +140,28 @@ public class LegendsOfValor implements Game {
                             } else {
                                 improperMove = true;
                             }
-
-
+                        }
+                        case "c" -> {
+                            List<Integer> monstersInRange = gameMap.enemyInRange(this.heroIdx);
+                            if (monstersInRange.size() > 0) {
+                                int monsterIdx = getAttackTarget(monstersInRange);
+                                Spell spellToCast = getSpell();
+                                if(spellToCast != null) {
+                                    useSpell(spellToCast, monsterIdx);
+                                    heroMoved[this.heroIdx] = true;
+                                    this.heroIdx++;
+                                }
+                            } else {
+                                improperMove = true;
+                            }
                         }
                         case "p" -> {
                             Potion potionToDrink = getPotion();
-                            drinkPotion(potionToDrink);
-                            heroMoved[this.heroIdx] = true;
-                            this.heroIdx++;
+                            if(potionToDrink != null) {
+                                drinkPotion(potionToDrink);
+                                heroMoved[this.heroIdx] = true;
+                                this.heroIdx++;
+                            }
                         }
                         case "b" -> {
                             if (gameMap.atNexus(this.heroIdx)) {
@@ -285,6 +301,42 @@ public class LegendsOfValor implements Game {
     }
 
 
+    private Spell getSpell() {
+        printer.clearScreen();
+        Scanner scanner = new Scanner(System.in);
+        List<Spell> spells = this.currentHero.getInventory().getSpells();
+        int spellIdx;
+
+        if (spells.size() < 1) {
+            printer.printRed("No Spells in Inventory\n");
+            printer.printYellow("Press Enter to continue...\n");
+            scanner.nextLine();
+            return null;
+
+        }
+
+        while (true) {
+            printer.printYellow("Choose a Spell to Cast:\n");
+            spellIdx = 1;
+
+            for (Spell spell : spells) {
+                printer.printYellow((spellIdx) + ". " + spell.getName() + "\n");
+                spellIdx++;
+            }
+            try {
+                spellIdx = Integer.parseInt(scanner.nextLine());
+                if (spellIdx <= 0 || spellIdx > spells.size()) {
+                    throw new Exception("Invalid Target");
+                }
+                return spells.get(spellIdx - 1);
+            } catch (Exception e) {
+                printer.printRed("Improper input\n");
+            }
+        }
+
+
+    }
+
     private Potion getPotion() {
         printer.clearScreen();
         Scanner scanner = new Scanner(System.in);
@@ -321,30 +373,6 @@ public class LegendsOfValor implements Game {
 
     }
 
-    private void enemyAttacked(int monsterIdx) {
-        Monster monster = this.monsters.get(monsterIdx);
-        Hero hero = party.getHeros().get(this.heroIdx);
-        int damageDone = hero.attack(monster);
-
-        if (damageDone == -1) {
-            printer.printRed(monster.getName() + " Dodged!\n");
-        } else if (monster.getHp() > 0) {
-            printer.clearScreen();
-            printer.printGreen(monster.getName() + " took " + damageDone + " damage!\n");
-            printer.printYellow("They now have " + monster.getHp() + " health.\n");
-        } else {
-            printer.printGreen(monster.getName() + " was killed!\n");
-            this.gameMap.removeMonster(monsterIdx);
-            this.monsters.remove(monster);
-        }
-
-        printer.printYellow("Press Enter to continue...\n");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-
-
-    }
-
     private void playerAttacked(int monsterIdx, int targetHeroIdx) {
         Monster monster = this.monsters.get(monsterIdx);
         Hero hero = party.getHeros().get(targetHeroIdx);
@@ -371,6 +399,55 @@ public class LegendsOfValor implements Game {
 
     }
 
+    private void enemyAttacked(int monsterIdx) {
+        Monster monster = this.monsters.get(monsterIdx);
+        Hero hero = party.getHeros().get(this.heroIdx);
+        int damageDone = hero.attack(monster);
+
+        if (damageDone == -1) {
+            printer.printRed(monster.getName() + " Dodged!\n");
+        } else if (monster.getHp() > 0) {
+            printer.clearScreen();
+            printer.printGreen(monster.getName() + " took " + damageDone + " damage!\n");
+            printer.printYellow("They now have " + monster.getHp() + " health.\n");
+        } else {
+            printer.printGreen(monster.getName() + " was killed!\n");
+            this.gameMap.removeMonster(monsterIdx);
+            this.monsters.remove(monster);
+        }
+
+        printer.printYellow("Press Enter to continue...\n");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+    private void useSpell(Spell spell, int monsterIdx) {
+        Monster target = this.monsters.get(monsterIdx);
+        Hero hero = party.getHeros().get(this.heroIdx);
+        int decrease = spell.getDamage(hero);
+
+
+        switch (spell.getSpellType()) {
+            case ICE-> {
+                target.decreaseDamage(decrease);
+                printer.printGreen(target.getName() + "'s Damage was decreased by " + decrease + "\n");
+            }
+            case FIRE-> {
+                target.decreaseDefense(decrease);
+                printer.printGreen(target.getName() + "'s Defense was decreased by " + decrease + "\n");
+            }
+            case LIGHTNING-> {
+                target.decreaseDodgeChance(spell.getDamage(hero));
+                printer.printGreen(target.getName() + "'s Dodge Chance was decreased by " + decrease + "\n");
+            }
+        }
+
+        printer.printYellow("Press Enter to continue...\n");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+
+
     public void drinkPotion(Potion potion) {
         if (potion != null) {
             potion.consume(this.currentHero);
@@ -387,15 +464,9 @@ public class LegendsOfValor implements Game {
         Hero hero = this.party.getHeros().get(targetIdx);
 
         switch (cell){
-            case BUSH -> {
-                this.currentHero.setDexterity( (int)(this.currentHero.getDexterity() * 1.1) );
-            }
-            case CAVE -> {
-                this.currentHero.setAgility( (int)(this.currentHero.getAgility() * 1.1) );
-            }
-            case KOULOU -> {
-                this.currentHero.setStrength( (int)(this.currentHero.getStrength() * 1.1) );
-            }
+            case BUSH -> this.currentHero.setDexterity( (int)(this.currentHero.getDexterity() * 1.1) );
+            case CAVE -> this.currentHero.setAgility( (int)(this.currentHero.getAgility() * 1.1) );
+            case KOULOU -> this.currentHero.setStrength( (int)(this.currentHero.getStrength() * 1.1) );
             default -> {
 
             }
@@ -403,15 +474,9 @@ public class LegendsOfValor implements Game {
 
         if (hero.getPreviousCell() != null) {
             switch (this.currentHero.getPreviousCell()) {
-                case BUSH -> {
-                    this.currentHero.setDexterity((int) (this.currentHero.getDexterity() / 1.1));
-                }
-                case CAVE -> {
-                    this.currentHero.setAgility((int) (this.currentHero.getAgility() / 1.1));
-                }
-                case KOULOU -> {
-                    this.currentHero.setStrength((int) (this.currentHero.getStrength() / 1.1));
-                }
+                case BUSH -> this.currentHero.setDexterity((int) (this.currentHero.getDexterity() / 1.1));
+                case CAVE -> this.currentHero.setAgility((int) (this.currentHero.getAgility() / 1.1));
+                case KOULOU -> this.currentHero.setStrength((int) (this.currentHero.getStrength() / 1.1));
                 default -> {
 
                 }
@@ -457,6 +522,7 @@ public class LegendsOfValor implements Game {
                     choice.equals("s") ||
                     choice.equals("d") ||
                     choice.equals("r") ||
+                    choice.equals("c") ||
                     choice.equals("p") ||
                     choice.equals("b") ||
                     choice.equals("t") ||

@@ -24,7 +24,7 @@ public class Spell extends Item {
 
     public int getDamage(Hero hero) {
         int damage = 0;
-        damage += hero.getDexterity() * 2;
+        damage +=  hero.getDexterity()/5;
         return damage;
     }
 
