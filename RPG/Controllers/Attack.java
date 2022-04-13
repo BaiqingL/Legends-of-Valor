@@ -1,10 +1,9 @@
 package RPG.Controllers;
 
-import RPG.Monsters.Monster;
 import RPG.World.GameCharacter;
-import RPG.World.LegendsOfValorMap;
 
+// Interface to implement attack for some characters
 public interface Attack {
-    public int attack(GameCharacter character);
+    int attack(GameCharacter character);
 
 }

@@ -2,6 +2,7 @@ package RPG.Controllers;
 
 import java.util.Scanner;
 
+// Game launcher selects, confirms and launches the game
 public class GameLauncher {
     private final FancyPrint printer = new FancyPrint();
 

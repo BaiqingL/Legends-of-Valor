@@ -1,6 +1,7 @@
 package RPG.Controllers;
 
 public class FancyPrint {
+    // ANSI Color Escape Codes
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -15,6 +16,7 @@ public class FancyPrint {
 
     }
 
+    // Public methods to print colored text
     public void printBlack(String input) {
         System.out.print(ANSI_BLACK + input + ANSI_RESET);
     }

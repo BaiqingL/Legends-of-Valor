@@ -1,5 +1,6 @@
 package RPG.Controllers;
 
+// Since tuples doesn't exist in Java, we create one for location
 public class LocationTuple {
     private final int x;
     private final int y;
@@ -17,9 +18,8 @@ public class LocationTuple {
         return y;
     }
 
+    // Determine if an attack can take place from this location
     public boolean isAdjacent(LocationTuple otherLocation) {
-
-
         return otherLocation.equals(this) ||
                 otherLocation.equals(new LocationTuple(this.x - 1, this.y)) ||
                 otherLocation.equals(new LocationTuple(this.x - 1, this.y - 1)) ||

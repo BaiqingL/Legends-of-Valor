@@ -20,6 +20,7 @@ public class Party {
         }
     }
 
+    // Heals hero on death
     public void healHero(int index) {
         heros.get(index).setHp(fullHealth.get(index));
     }
@@ -70,6 +71,7 @@ public class Party {
         this.money += money;
     }
 
+    // Check if everyone is dead
     public boolean allHerosDead() {
         for (Hero hero : this.heros) {
             if (hero.getHp() > 0) {
